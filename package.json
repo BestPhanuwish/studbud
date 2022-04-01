@@ -1,0 +1,19 @@
+{
+  "name": "studbud",
+  "version": "1.0.0",
+  "description": "Assesment 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BestPhanuwish/studbud.git"
+  },
+  "author": "Phanuwish Chamnivigaiwech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BestPhanuwish/studbud/issues"
+  },
+  "homepage": "https://github.com/BestPhanuwish/studbud#readme"
+}
