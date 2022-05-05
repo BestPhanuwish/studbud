@@ -4,7 +4,7 @@
   "description": "Assesment 3",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/BestPhanuwish/studbud/issues"
   },
-  "homepage": "https://github.com/BestPhanuwish/studbud#readme"
+  "homepage": "https://github.com/BestPhanuwish/studbud#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
