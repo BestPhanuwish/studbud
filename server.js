@@ -5,11 +5,11 @@ const express = require('express');
 const app = express();
 
 // server static file from public folder
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/dist'));
 
 // serve the index file to user
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/public/index.html')
+    res.sendFile(__dirname + '/dist/index.html');
 })
 
 // let server listen to port 8888

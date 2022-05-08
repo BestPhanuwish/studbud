@@ -1,0 +1,1 @@
+{"mappings":"ACAA;;;;ACAA","sources":["public/scss/main.scss","public/scss/layout.scss","public/scss/navigation.scss"],"sourcesContent":["@import \"layout\";\n@import \"navigation\";",null,null],"names":[],"version":3,"file":"index.c74267d1.css.map","sourceRoot":"/__parcel_source_root/"}
