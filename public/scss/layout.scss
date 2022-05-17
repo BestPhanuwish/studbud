@@ -1,3 +1,28 @@
-body {
-    background-color: red;
+// The whole website have the same header on every page, so we can just use header tag normally
+header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 10px;
+    z-index: 997;
+
+    a {
+        cursor: pointer;
+        margin-right: auto;
+    }
+
+    nav ul {
+        list-style: none;
+    }
+
+    nav ul li {
+        display: inline-block;
+        padding: 0px 30px;
+    }
+
+    figure {
+        display: inline-block;
+    }
 }

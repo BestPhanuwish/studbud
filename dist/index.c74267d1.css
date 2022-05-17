@@ -1,9 +1,109 @@
-body {
-  background-color: red;
+*, :before, :after {
+  box-sizing: border-box;
 }
 
-nav {
+ul[class], ol[class] {
+  padding: 0;
+}
+
+body, h1, h2, h3, h4, p, ul[class], ol[class], li, figure, figcaption, blockquote, dl, dd {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizespeed;
+  line-height: 1.5;
+}
+
+ul[class], ol[class] {
+  list-style: none;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+article > * + * {
+  margin-top: 1em;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+header {
+  z-index: 997;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
   display: flex;
+  position: sticky;
+  top: 0;
+}
+
+header a {
+  cursor: pointer;
+  margin-right: auto;
+}
+
+header nav ul {
+  list-style: none;
+}
+
+header nav ul li {
+  padding: 0 30px;
+  display: inline-block;
+}
+
+header figure {
+  display: inline-block;
+}
+
+html {
+  font-family: Montserrat, sans-serif;
+}
+
+.TOPBAR-navigation {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.TOPBAR-navigation:hover {
+  color: #da3e52;
+}
+
+.TOPBAR-navigation:active {
+  color: #da3e52;
+  text-decoration: underline;
+}
+
+#Tomato-Text {
+  color: #da3e52;
+  font-family: Montserrat;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=index.c74267d1.css.map */

@@ -1,0 +1,31 @@
+// Throughout the whole web application, we use only 1 font
+html { 
+    font-family: 'Montserrat', sans-serif;
+}
+
+.TOPBAR-navigation {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    text-decoration: none;
+    color: #000000;
+}
+
+.TOPBAR-navigation:hover {
+    color: #DA3E52;
+}
+
+.TOPBAR-navigation:active {
+    text-decoration: underline;
+    color: #DA3E52;
+}
+
+#Tomato-Text {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    text-decoration: none;
+    color: #DA3E52;
+}
