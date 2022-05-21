@@ -1,31 +1,74 @@
-// Throughout the whole web application, we use only 1 font
-html { 
-    font-family: 'Montserrat', sans-serif;
+/* Declare variable */
+
+// Color-pallette
+$YELLOW-COLOR: #f2e94e;
+$DARKYELLOW-COLOR: #fed766;
+$RED-COLOR: #da3e52;
+$GREEN-COLOR: #96e6b3;
+$BLUE-COLOR: #a3d9ff;
+$BLACK-COLOR: #272727;
+$GREY-COLOR: #696773;
+$WHITE-COLOR: #EFF1F3;
+
+// Font style
+@mixin FONT-TEMPLATE($style, $weight, $size) { // act as a template for every font
+    font-style: $style;
+    font-weight: $weight;
+    font-size: $size;
 }
 
-.TOPBAR-navigation {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 800;
-    font-size: 24px;
+@mixin TOMATO-FONT {
+    @include FONT-TEMPLATE(normal, 800, 48px);
+}
+
+@mixin HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 800, 24px);
+}
+
+@mixin SUB-HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 700, 18px);
+}
+
+@mixin SPECIAL-FONT {
+    @include FONT-TEMPLATE(italic, 200, 18px);
+}
+
+@mixin PARAGRAPH-FONT {
+    @include FONT-TEMPLATE(normal, 400, 12px);
+}
+
+
+/* All general typography */
+body { 
+    font-family: 'Montserrat', sans-serif; // we use the same font througout the website
+    color: $BLACK-COLOR;
     text-decoration: none;
-    color: #000000;
 }
 
-.TOPBAR-navigation:hover {
-    color: #DA3E52;
-}
+h1 { @include HEADER-FONT(); }
+h2 { @include SUB-HEADER-FONT(); }
+h3 { @include SPECIAL-FONT(); } // All the h3 tag will represent the special text for this web application
+p { @include PARAGRAPH-FONT(); }
 
-.TOPBAR-navigation:active {
-    text-decoration: underline;
-    color: #DA3E52;
-}
 
-#Tomato-Text {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 800;
-    font-size: 48px;
-    text-decoration: none;
-    color: #DA3E52;
+/* Header (TOPBAR) typography */
+header {
+    nav ul li a {
+        @include HEADER-FONT();
+        text-decoration: none;
+        color: $BLACK-COLOR;
+
+        &:hover {
+            color: $RED-COLOR;
+        }
+    
+        &:active {
+            text-decoration: underline;
+        }
+    }
+
+    figure figcaption {
+        @include TOMATO-FONT();
+        color: $RED-COLOR;
+    }
 }

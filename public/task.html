@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <title>STUDBUD - Task</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Organise your assignment task and fun" />
+  <meta name="keywords" content="Studbud, study tool, assignment helper">
+  <meta name="author" content="Best Phanuwish">
+  <!-- <link rel="icon" href="img.favicon.png"> -->
+  <link rel="stylesheet" href="scss/main.scss">
+  <!-- Import Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;1,200&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- This header will be the same for every page of this web application, acts as a top bar navigation so user can always select whatever tool they wish to use -->
+  <header class="TOBBAR">
+    <!-- The link and logo image, when the user click on the logo. It's go to the task list page (which is homepage of this website) for accessibility purpose. -->
+    <a href="index.html" title="STUDBUD" rel="home">
+      <img src="Image/Studbud-Logo(demo).png" alt="STUDBUD's logo image">
+    </a>
+
+    <!-- This navigation tab will acts different up to the device that end user is using. -->
+    <nav>
+      <ul>
+        <li>
+          <a class="TOBBAR-navigation" href="index.html" rel="task-page">Task</a>
+        </li>
+        <span></span>
+        <li>
+          <a class="TOBBAR-navigation" href="index.html" rel="timer-page">Timer</a>
+        </li>
+        <span></span>
+        <li>
+          <a class="TOBBAR-navigation" href="index.html" rel="content-page">Content</a>
+        </li>
+        <span></span>
+        <li>
+          <a class="TOBBAR-navigation" href="index.html" rel="music-page">Music</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Tomato currency to show the current value of tomato the player have -->
+    <figure>
+      <img src="Image/tomato.png" alt="Tomato currecy icon">
+      <figcaption id="Tomato-text">0</figcaption>
+    </figure>
+  </header>
+
+  <!-- The main task page, all the main tag in this web application will have different id due to different page styling -->
+  <main id="Task-List">
+
+    <aside>
+      <h3>LOL</h3>
+    </aside>
+
+    <article>
+      <form id="taskform">
+        <label for="task">Task:</label>
+        <input type="text" name="task" id="taskInput">
+  
+        <br>
+        <!-- Date input -->
+        <label for="dueDate">Due Date: </label>
+        <input type="date" name="dueDate" id="dueDateInput">
+        <br>
+        <!-- Time input -->
+        <label for="completionTime">Completion Time: </label>
+        <input type="time" name="completionTime" id="completionTimeInput">
+  
+        <br>
+  
+        <label for="estimatedTime">Estimated completion time (in mins):</label>
+        <input type="number" name="estimatedTime" id="estimatedTimeInput">
+        <!-- Priority -->
+        <br>
+  
+        <label for="priority">Task Priority:</label>
+        <select name="prority" id="priorityInput">
+          <option value="">Select one</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+  
+        <br>
+  
+        <button type="submit">Submit</button>
+      </form>
+      <ul id="tasklist">
+      </ul>
+    </article>
+
+  </main>
+
+</body>
+
+<script src="script.js"></script>
+
+</html>

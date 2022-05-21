@@ -1,0 +1,85 @@
+/* Declare variable */
+
+// Color-pallette
+$YELLOW-COLOR: #f2e94e;
+$DARKYELLOW-COLOR: #fed766;
+$RED-COLOR: #da3e52;
+$GREEN-COLOR: #96e6b3;
+$BLUE-COLOR: #a3d9ff;
+$BLACK-COLOR: #272727;
+$GREY-COLOR: #696773;
+$WHITE-COLOR: #EFF1F3;
+
+// Font style
+@mixin FONT-TEMPLATE($style, $weight, $size) { // act as a template for every font
+    font-style: $style;
+    font-weight: $weight;
+    font-size: $size;
+}
+
+@mixin HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 800, 24px);
+}
+
+@mixin SUB-HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 700, 18px);
+}
+
+@mixin SPECIAL-FONT {
+    @include FONT-TEMPLATE(italic, 200, 18px);
+}
+
+@mixin PARAGRAPH-FONT {
+    @include FONT-TEMPLATE(normal, 400, 12px);
+}
+
+/* Task page layout */
+#Task-List {
+    // split aside nav and main content with grid layout
+    display: grid; 
+    grid-template-columns: 20% 1fr; 
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+        "aside content"; 
+
+    aside { 
+        grid-area: aside; 
+        padding: 20px;
+        h3 { display: inline; }
+        button { display: inline; }
+    }
+
+    content { 
+        grid-area: content; 
+        padding: 20px;
+    }
+}
+
+/* Task page styling */
+#Task-List {
+
+    aside { 
+        background-color: $YELLOW-COLOR;
+        button {
+            // hide button only image shown
+            border: 0;
+            background: transparent;
+            img { cursor: pointer; }
+        }
+
+        // hide the list dot point on aside navigation
+        ul { list-style: none; }
+        ul li ul { list-style: none; }
+    }
+
+    content { 
+        background-color: $WHITE-COLOR;
+    }
+}
+
+/* Task page typography */
+#Task-List {
+
+    aside ul li { @include SPECIAL-FONT(); }
+    aside ul li ul li { @include SPECIAL-FONT(); }
+}
