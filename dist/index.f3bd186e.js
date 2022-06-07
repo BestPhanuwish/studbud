@@ -1,57 +1,48 @@
-// Setting up variables for our HTML elements using DOM selection
-const form = document.getElementById("taskform");
-const button = document.querySelector("#taskform > button"); // Complex CSS query
-const tasklist = document.getElementById("tasklist");
-const taskInput = document.getElementById("taskInput");
-// Event listener for Button click
-// This could also be form.addEventListener("submit", function() {...} )
-button.addEventListener("click", function(event) {
-    event.preventDefault(); // Not as necessary for button, but needed for form submit
-    let task = form.elements.task.value; // could be swapped out for line below
-    //let task = taskInput.value;
-    let date = new Date().toLocaleDateString('en-US') //Convert to short date format
-    ;
-    // Call the addTask() function using
-    addTask(task, date, "26/03/2021", "Low", [
-        "1",
-        "30"
-    ], false);
-    // Log out the newly populated taskList everytime the button has been pressed
-    console.log(taskList);
+/*
+Initialise custom HTML tags
+
+I've discovered the custom HTML tags to be the super useful tool
+to help structure and improve readability of the code overall
+instead of using id attribute.
+
+popup-form: use to contain the html form with faded black background, 
+and will use for form popup such as when adding new assignment
+main-content: seperate aside tag and the main content using content tag 
+instead of using main tag again, to avoid repetition on css code using diferent id
+
+More information of custom HTML tags:
+https://www.smashingmagazine.com/2014/03/introduction-to-custom-elements/
+*/ class PopupForm extends HTMLElement {
+    constructor(){
+        super();
+    }
+}
+class MainContent extends HTMLElement {
+    constructor(){
+        super();
+    }
+}
+customElements.define("popup-form", PopupForm);
+customElements.define("main-content", MainContent);
+/*
+Global variable
+
+The reason I use only 1 JavaScript file because the variable such as tomato
+and subjects will use across the whole page.
+*/ var tomato = 0;
+var subjects = [];
+/*
+Task page
+*/ // variable
+var assignmentButton = document.querySelector("#Task-List > aside > button");
+var assignmentForm = document.getElementById("add-assignment");
+var assignmentBackground = document.querySelector("#add-assignment > div");
+// function
+assignmentButton.addEventListener("click", function(event) {
+    assignmentForm.style.display = "block";
 });
-// Create an empty array to store our tasks
-var taskList = [];
-function addTask(taskDescription, createdDate, dueDate, priorityRating, estimatedTime, completionStatus) {
-    let task = {
-        taskDescription,
-        createdDate,
-        dueDate,
-        priorityRating,
-        estimatedTime,
-        completionStatus
-    };
-    // Add the task to our array of tasks
-    taskList.push(task);
-    // Separate the DOM manipulation from the object creation logic
-    renderTask(task);
-}
-// Function to display the item on the page
-function renderTask(task) {
-    let item = document.createElement("li");
-    item.innerHTML = "<p>" + task.taskDescription + "</p>";
-    tasklist.appendChild(item);
-    // Setup delete button DOM elements
-    let delButton = document.createElement("button");
-    let delButtonText = document.createTextNode("Delete");
-    delButton.appendChild(delButtonText);
-    item.appendChild(delButton); // Adds a delete button to every task
-    // Listen for when the 
-    delButton.addEventListener("click", function(event) {
-        item.remove(); // Remove the task item from the page when button clicked
-    // Because we used 'let' to define the item, this will always delete the right element
-    });
-    // Clear the value of the input once the task has been added to the page
-    form.reset();
-}
+assignmentBackground.addEventListener("click", function(event) {
+    assignmentForm.style.display = "none";
+});
 
 //# sourceMappingURL=index.f3bd186e.js.map

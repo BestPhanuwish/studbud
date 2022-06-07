@@ -19,7 +19,7 @@
 <body>
 
   <!-- This header will be the same for every page of this web application, acts as a top bar navigation so user can always select whatever tool they wish to use -->
-  <header class="TOBBAR">
+  <header>
     <!-- The link and logo image, when the user click on the logo. It's go to the task list page (which is homepage of this website) for accessibility purpose. -->
     <a href="index.html" title="STUDBUD" rel="home">
       <img src="Image/Studbud-Logo(demo).png" alt="STUDBUD's logo image">
@@ -29,19 +29,19 @@
     <nav>
       <ul>
         <li>
-          <a class="TOBBAR-navigation" href="task.html" rel="task-page">Task</a>
+          <a href="taskOld.html" rel="task-page">Task</a>
         </li>
         <span></span>
         <li>
-          <a class="TOBBAR-navigation" href="index.html" rel="timer-page">Timer</a>
+          <a href="index.html" rel="timer-page">Timer</a>
         </li>
         <span></span>
         <li>
-          <a class="TOBBAR-navigation" href="index.html" rel="content-page">Content</a>
+          <a href="index.html" rel="content-page">Content</a>
         </li>
         <span></span>
         <li>
-          <a class="TOBBAR-navigation" href="index.html" rel="music-page">Music</a>
+          <a href="index.html" rel="music-page">Music</a>
         </li>
       </ul>
     </nav>
@@ -62,40 +62,166 @@
         <img src="Image/plus.png" alt="Add new assignment button">
       </button>
       <ul id="assignment-selector">
-        <li>
-          huh
-          <ul>
-            <li>
-              bruh
-            </li>
-            <li>
-              breh
-            </li>
-          </ul>
-        </li>
-        <li>
-          lol
-          <ul>
-            <li>
-              lel
-            </li>
-          </ul>
-        </li>
       </ul>
     </aside>
 
-    <content>
-      
-    </content>
+    <main-content>
+      <div id="board-kanban">
+        <section id="board-kanban-topbar">
+          <div id="text">
+            <h1 id="subject"></h1>
+            <h1 id="assignment"></h1>
+            <h1 id="due-date"></h1>
+          </div>
+          <div id="button">
+            <button id="mark-button">
+              <img src="Image/mark.png" alt="Mark assignment done button">
+            </button>
+            <button id="edit-button">
+              <img src="Image/edit.png" alt="Edit an assignment button">
+            </button>
+            <button id="delete-button">
+              <img src="Image/delete.png" alt="Delete an assignment button">
+            </button>
+          </div>
+        </section>
+        <span id="board-kanban-lineup"></span>
+        <section id="board-kanban-todo">
+          <h3>TO-DO</h3>
+          <article>
+            <h2>GG</h2>
+            <div>
+              <button id="drag-button">
+                <img src="Image/drag.png" alt="Drag task button">
+              </button>
+              <button id="edit-button">
+                <img src="Image/edit.png" alt="Edit task button">
+              </button>
+              <button id="delete-button">
+                <img src="Image/delete.png" alt="Delete task button">
+              </button>
+            </div>
+            <p>Due: 7/08/2022</p>
+            <p>2 hours</p>
+            <p>Long paragraph</p>
+            <div>
+              <label>1 / 4</label>
+              <div></div>
+            </div>
+          </article>
+          <button>
+            <img src="Image/plus.png" alt="Add new assignment button">
+          </button>
+        </section>
+        <span id="board-kanban-lineleft"></span>
+        <section id="board-kanban-progress">
+          <h3>IN PROGRESS</h3>
+        </section>
+        <span id="board-kanban-lineright"></span>
+        <section id="board-kanban-done">
+          <h3>DONE</h3>
+        </section>
+      </div>
+
+      <div id="board-add">
+        <img src="Image/assignment.png" alt="Assignment icon image">
+        <img src="Image/plus.png" alt="Add new assignment button">
+        <h1>Create new assignment to start!</h1>
+      </div>
+    </main-content>
 
   </main>
 
-  <popup id="Add-Assignment">
-    <p>ay</p>
-  </popup>
+  <popup-form id="add-assignment" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+
+      <ul>
+        <!-- Subject Select (fill the content by js) -->
+        <li>
+          <label for="subject">Subject</label>
+          <select name="subject" required>
+          </select>
+          <small></small>
+        </li>
+        <!-- Subject Name -->
+        <li>
+          <label for="subject-name">Subject Name</label>
+          <input type="text" name="subject-name">
+          <small></small>
+        </li>
+        <!-- Assignment name -->
+        <li>
+          <label for="assignment">Assignment Name</label>
+          <input type="text" name="assignment" required>
+          <small></small>
+        </li>
+        <!-- Due Date -->
+        <li>
+          <label for="due">Due</label>
+          <input type="date" name="due" id="form-due" required>
+          <small></small>
+        </li>
+      </ul>
+
+      <button type="button" id="form-submit-button">Create</button>
+    </form>
+  </popup-form>
+
+  <popup-form id="mark-assignment" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+      <h3>Are you sure you want to mark an assignment as done?</h3>
+      <button type="button" id="form-no-button">No</button>
+      <button type="button" id="form-yes-button">Yes</button>
+    </form>
+  </popup-form>
+
+  <popup-form id="edit-assignment" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+
+      <ul>
+        <!-- Subject Name -->
+        <li>
+          <label for="subject-name">Subject Name</label>
+          <input type="text" name="subject-name" disabled>
+          <small></small>
+        </li>
+        <!-- Assignment name -->
+        <li>
+          <label for="assignment">Assignment Name</label>
+          <input type="text" name="assignment" required>
+          <small></small>
+        </li>
+        <!-- Due Date -->
+        <li>
+          <label for="due">Due</label>
+          <input type="date" name="due" id="form-due" required>
+          <small></small>
+        </li>
+      </ul>
+
+      <button type="button" id="form-submit-button">Change</button>
+    </form>
+  </popup-form>
+
+  <popup-form id="delete-assignment" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+      <h3>Are you sure you want to delete this assignment?</h3>
+      <button type="button" id="form-no-button">No</button>
+      <button type="button" id="form-yes-button">Yes</button>
+    </form>
+  </popup-form>
 
 </body>
 
-<script src="script.js"></script>
+<script src="js/customElementInit.js"></script>
+<script src="js/task.js"></script>
 
 </html>

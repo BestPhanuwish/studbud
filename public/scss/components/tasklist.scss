@@ -33,6 +33,26 @@ $WHITE-COLOR: #EFF1F3;
     @include FONT-TEMPLATE(normal, 400, 12px);
 }
 
+@mixin UNSELECTABLE_TEXT {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+// Layout variable
+@mixin SCROLLING_LAYOUT {
+    display: block; 
+    overflow-y: auto; 
+    word-wrap: break-word;
+}
+
+@mixin TASK_CONTENT {
+    margin: 0.25em 0;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
 /* Task page layout */
 #Task-List {
     // split aside nav and main content with grid layout
@@ -43,13 +63,14 @@ $WHITE-COLOR: #EFF1F3;
         "aside content"; 
 
     aside { 
+        @include SCROLLING_LAYOUT();
         grid-area: aside; 
         padding: 20px;
         h3 { display: inline; }
         button { display: inline; }
     }
 
-    content { 
+    main-content { 
         grid-area: content; 
         padding: 20px;
     }
@@ -64,12 +85,14 @@ $WHITE-COLOR: #EFF1F3;
             // hide button only image shown
             border: 0;
             background: transparent;
-            img { cursor: pointer; }
         }
 
         // hide the list dot point on aside navigation
         ul { list-style: none; }
         ul li ul { list-style: none; }
+
+        // make the assignment navigation look clickable
+        ul li ul li { cursor: pointer; &:hover{ color: $BLUE-COLOR; } }
     }
 
     content { 
@@ -82,4 +105,182 @@ $WHITE-COLOR: #EFF1F3;
 
     aside ul li { @include SPECIAL-FONT(); }
     aside ul li ul li { @include SPECIAL-FONT(); }
+}
+
+/* Kanban board layout */
+#board-kanban {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr 2.5px 1fr 2.5px 1fr;
+    grid-template-rows: 5vh 2.5px 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      "topbar topbar topbar topbar topbar"
+      "line-up line-up line-up line-up line-up"
+      "todo line-left progress line-right done";
+
+    #board-kanban-topbar { 
+        grid-area: topbar;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 { display: inline; }
+
+        button { // set the button so it fit with top bar size
+            display: inline;
+            width: 5vh; 
+            height: 5vh; 
+
+            img { min-width: 3.5vh; min-height: 3.5vh; } // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+        }
+    }
+
+    #board-kanban-lineup { grid-area: line-up; background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5); }
+    #board-kanban-lineleft { grid-area: line-left; background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5); }
+    #board-kanban-lineright { grid-area: line-right; background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5); }
+
+    #board-kanban-todo { grid-area: todo; text-align: center; @include SCROLLING_LAYOUT(); }
+    #board-kanban-progress { grid-area: progress; text-align: center; @include SCROLLING_LAYOUT(); }
+    #board-kanban-done { grid-area: done; text-align: center; @include SCROLLING_LAYOUT(); }
+}
+
+#board-add {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    img, h1 { margin: 2vh auto; }
+}
+
+/* Kanban board styling */
+#board-kanban {
+
+    #board-kanban-topbar {
+
+        button {
+            // hide button only image shown
+            border: 0;
+            background: transparent;
+        }
+
+        #due-date { margin-left: 2vw; color: $RED-COLOR; } // make due-date a red text and move it a bit to the right
+    }
+}
+
+#board-add {
+    cursor: pointer;
+    border: 0.5em dashed $BLUE-COLOR;
+
+    h1 { @include UNSELECTABLE_TEXT(); }
+}
+
+/* Kanban board typography */
+
+/* Task note layout */
+#board-kanban > * > article {
+    width: 100%;
+    height: auto;
+    margin: 2vh auto;
+    padding: 1em;
+    text-align: left;
+    display: grid; 
+    grid-template-columns: auto auto; 
+    grid-template-rows: auto auto auto auto; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "header button"
+      "due time"
+      "description description"
+      "progress progress"; 
+
+    // layout the child of task note
+    h2 { grid-area: header; @include TASK_CONTENT(); }
+    h2 + div { grid-area: button; @include TASK_CONTENT(); display: flex; justify-content: flex-end; }
+    p:first-of-type { grid-area: due; @include TASK_CONTENT(); }
+    p:nth-of-type(2) { grid-area: time; @include TASK_CONTENT(); }
+    p:last-of-type { grid-area: description; @include TASK_CONTENT(); }
+    p + div { 
+        grid-area: progress; 
+        @include TASK_CONTENT(); 
+        // make the progress bar child overlap each others
+        display: grid; 
+        grid-template-columns: 1fr; 
+        grid-template-rows: 1fr; 
+        label { grid-area: 1 / 1 / 2 / 2; }
+        div { grid-area: 1 / 1 / 2 / 2; }
+    }
+
+
+    div > button { // set the button so it fit with note
+        display: inline;
+        width: 1.5rem; 
+        height: 1.5rem; 
+
+        img { min-width: 1rem; min-height: 1rem; }
+    }
+}
+
+/* Task note styling */
+#board-kanban > * > article {
+    background-color: white;
+    border-radius: 20px;
+
+    // custom the drag button
+    #drag-button { cursor: grab; }
+
+    // make due date a red text
+    p:first-of-type { color: $RED-COLOR; }
+
+    // create frame for estimated completed time
+    p:nth-of-type(2) { 
+        color: $WHITE-COLOR; 
+        background-color: $GREY-COLOR; 
+        border-radius: 25px;
+        // make a custom layout seperate from layout section, for aesthetic purpose
+        margin-right: auto;
+        padding: 0 0.5em;
+    }
+
+    // style the progress bar frame outline
+    p + div {
+        background-color: rgba($color: $GREY-COLOR, $alpha: 0.2);
+        border-radius: 25px;
+        text-align: center;
+
+        // style the actual progress bar
+        div {
+            width: 25%; // Independent variable placeholder (must be remove after done js)
+            background-color: $GREEN-COLOR;
+        }
+
+        // typography of label on progress bar (make text stroke using text-shadow property because it's access more browser without using any library)
+        label { @include SUB-HEADER-FONT(); text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
+    }
+
+    // hide button only image shown
+    div > button {
+        border: 0;
+        background: transparent;
+    }
+}
+
+/* Task add button layout */
+#board-kanban > * > button {
+    width: 100%;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Task add button styling */
+#board-kanban > * > button {
+    background: transparent;
+    border: 0.25rem dashed $BLUE-COLOR;
 }
