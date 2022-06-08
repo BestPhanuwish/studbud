@@ -29,11 +29,11 @@
     <nav>
       <ul>
         <li>
-          <a href="taskOld.html" rel="task-page">Task</a>
+          <a href="index.html" rel="task-page">Task</a>
         </li>
         <span></span>
         <li>
-          <a href="index.html" rel="timer-page">Timer</a>
+          <a href="timer.html" rel="timer-page">Timer</a>
         </li>
         <span></span>
         <li>
@@ -56,6 +56,7 @@
   <!-- The main task page, all the main tag in this web application will have different id due to different page styling -->
   <main id="Task-List">
 
+    <!-- This aside will contains a list of subject and assignment that user have in local storage where it will be add dynamically, and user able to navigate to each assignment which contains different information that will be pass to kanbanboard -->
     <aside>
       <h3>Task</h3>
       <button>
@@ -65,8 +66,11 @@
       </ul>
     </aside>
 
+    <!-- Main content is specify where user will be interact the most -->
     <main-content>
+      <!-- The kanban board will appear when they have an assignment in local storage at least one, then all the task will be add on the board dynamically accorded to user current task that it also kept in local storage. So, it's easier for user to manage their task. -->
       <div id="board-kanban">
+        <!-- The kanbanboard topbar will let the user know which assignment they are currently working on -->
         <section id="board-kanban-topbar">
           <div id="text">
             <h1 id="subject"></h1>
@@ -74,55 +78,47 @@
             <h1 id="due-date"></h1>
           </div>
           <div id="button">
+            <!-- If the user able to finish their assignment without the help of tomodoro and progress bar, they can just simply mark it as finish, so user can organise their workspace -->
             <button id="mark-button">
               <img src="Image/mark.png" alt="Mark assignment done button">
             </button>
+            <!-- This will allow user be able to edit their assignment in case if they've received extention time -->
             <button id="edit-button">
               <img src="Image/edit.png" alt="Edit an assignment button">
             </button>
+            <!-- User able to delete the whole assignment if they want to, if there are no assignment left on the subject, it also delete the subject key -->
             <button id="delete-button">
               <img src="Image/delete.png" alt="Delete an assignment button">
             </button>
           </div>
         </section>
         <span id="board-kanban-lineup"></span>
+        <!-- Will dynamically add its content in javascript 'task.js' -->
         <section id="board-kanban-todo">
-          <h3>TO-DO</h3>
-          <article>
-            <h2>GG</h2>
-            <div>
-              <button id="drag-button">
-                <img src="Image/drag.png" alt="Drag task button">
-              </button>
-              <button id="edit-button">
-                <img src="Image/edit.png" alt="Edit task button">
-              </button>
-              <button id="delete-button">
-                <img src="Image/delete.png" alt="Delete task button">
-              </button>
-            </div>
-            <p>Due: 7/08/2022</p>
-            <p>2 hours</p>
-            <p>Long paragraph</p>
-            <div>
-              <label>1 / 4</label>
-              <div></div>
-            </div>
-          </article>
-          <button>
+          <h1>TO-DO</h1>
+          <button id="add-task-button">
             <img src="Image/plus.png" alt="Add new assignment button">
           </button>
         </section>
         <span id="board-kanban-lineleft"></span>
+        <!-- Will dynamically add its content in javascript 'task.js' -->
         <section id="board-kanban-progress">
-          <h3>IN PROGRESS</h3>
+          <h1>IN PROGRESS</h1>
+          <button id="add-task-button">
+            <img src="Image/plus.png" alt="Add new assignment button">
+          </button>
         </section>
         <span id="board-kanban-lineright"></span>
+        <!-- Will dynamically add its content in javascript 'task.js' -->
         <section id="board-kanban-done">
-          <h3>DONE</h3>
+          <h1>DONE</h1>
+          <button id="add-task-button">
+            <img src="Image/plus.png" alt="Add new assignment button">
+          </button>
         </section>
       </div>
 
+      <!-- In case if the user didn't have any assignment on their data, this content will shown up instead of kanbanboard to encourage user to acts and create new assignment when they just visit this page on the first time -->
       <div id="board-add">
         <img src="Image/assignment.png" alt="Assignment icon image">
         <img src="Image/plus.png" alt="Add new assignment button">
@@ -132,6 +128,30 @@
 
   </main>
 
+  <!-- This article is acts as a template and will get clone to the kanbanboard. So, this content have to be invisible to the user -->
+  <article id="task-template">
+    <h2></h2>
+    <div>
+      <button id="drag-button">
+        <img src="Image/drag.png" alt="Drag task button">
+      </button>
+      <button id="edit-button">
+        <img src="Image/edit.png" alt="Edit task button">
+      </button>
+      <button id="delete-button">
+        <img src="Image/delete.png" alt="Delete task button">
+      </button>
+    </div>
+    <p></p>
+    <p></p>
+    <p></p>
+    <div>
+      <label></label>
+      <div></div>
+    </div>
+  </article>
+
+  <!-- This popup form will only show when user add the new assignment. So, this content have to be invisible to the user -->
   <popup-form id="add-assignment" open>
     <div></div>
     <form>
@@ -169,6 +189,7 @@
     </form>
   </popup-form>
 
+  <!-- This popup form will only show when user mark done an assignment. So, this content have to be invisible to the user -->
   <popup-form id="mark-assignment" open>
     <div></div>
     <form>
@@ -179,6 +200,7 @@
     </form>
   </popup-form>
 
+  <!-- This popup form will only show when user try to edit an assignment. So, this content have to be invisible to the user -->
   <popup-form id="edit-assignment" open>
     <div></div>
     <form>
@@ -209,11 +231,83 @@
     </form>
   </popup-form>
 
+  <!-- This popup form will only show when user try to delete an assignment. So, this content have to be invisible to the user -->
   <popup-form id="delete-assignment" open>
     <div></div>
     <form>
       <button type="button" id="form-exit-button">X</button>
       <h3>Are you sure you want to delete this assignment?</h3>
+      <button type="button" id="form-no-button">No</button>
+      <button type="button" id="form-yes-button">Yes</button>
+    </form>
+  </popup-form>
+
+  <!-- This popup form will only show when user add the new task or edit task on kanbanboard. So, this content have to be invisible to the user -->
+  <popup-form id="add-task" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+
+      <ul>
+        <!-- Task Name -->
+        <li>
+          <label for="name">Task Name</label>
+          <input type="text" name="name" required>
+          <small></small>
+        </li>
+        <!-- Due Date -->
+        <li>
+          <label for="due">Due</label>
+          <input type="date" name="due" id="form-due" required>
+          <small></small>
+        </li>
+        <!-- Estimated Tomodoro used -->
+        <li>
+          <label for="goal">Estimated Tomodoro Used</label>
+          <input type="number" name="goal" id="form-number" required>
+          <small></small>
+        </li>
+        <!-- Current Tomodoro progress -->
+        <li>
+          <label for="progress">Current Tomodoro Progress</label>
+          <input type="number" name="progress" id="form-number" required>
+          <small></small>
+        </li>
+        <!-- Priority -->
+        <li id="form-radio-list">
+          <label for="priority">Priority</label>
+          <input type="radio" id="low" name="priority" value=0 checked />
+          <label for="low">Low</label>
+          <input type="radio" id="mid" name="priority" value=1 />
+          <label for="mid">Mid</label>
+          <input type="radio" id="high" name="priority" value=2 />
+          <label for="high">High</label>
+        </li>
+        <!-- Status -->
+        <li id="form-radio-list">
+          <label for="status">Status</label>
+          <input type="radio" id="not-done" name="status" value=false checked />
+          <label for="not-done">Not Done</label>
+          <input type="radio" id="done" name="status" value=true />
+          <label for="done">Done</label>
+        </li>
+        <!-- Description -->
+        <li>
+          <label for="description">Description (optional)</label>
+          <textarea name="description" id="form-textarea"></textarea>
+        </li>
+      </ul>
+
+      <button type="button" id="form-submit-button">Create</button>
+    </form>
+  </popup-form>
+
+  <!-- This popup form will only show when user try to delete the task on kanbanboard. So, this content have to be invisible to the user -->
+  <popup-form id="delete-task" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+      <h3>Are you sure you want to delete this task?</h3>
       <button type="button" id="form-no-button">No</button>
       <button type="button" id="form-yes-button">Yes</button>
     </form>

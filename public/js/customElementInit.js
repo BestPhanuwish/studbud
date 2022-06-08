@@ -24,6 +24,13 @@ class MainContent extends HTMLElement {
         super();
     }
 }
+
+class TimerText extends HTMLElement {
+    constructor() {
+        super();
+    }
+}
   
 customElements.define("popup-form", PopupForm);
 customElements.define("main-content", MainContent);
+customElements.define("timer-text", TimerText);

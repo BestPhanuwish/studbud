@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <title>STUDBUD - Timer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Organise your assignment task and fun" />
+  <meta name="keywords" content="Studbud, study tool, assignment helper">
+  <meta name="author" content="Best Phanuwish">
+  <!-- <link rel="icon" href="img.favicon.png"> -->
+  <link rel="stylesheet" href="scss/main.scss">
+  <!-- Import Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;1,200&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- This header will be the same for every page of this web application, acts as a top bar navigation so user can always select whatever tool they wish to use -->
+  <header>
+    <!-- The link and logo image, when the user click on the logo. It's go to the task list page (which is homepage of this website) for accessibility purpose. -->
+    <a href="index.html" title="STUDBUD" rel="home">
+      <img src="Image/Studbud-Logo(demo).png" alt="STUDBUD's logo image">
+    </a>
+
+    <!-- This navigation tab will acts different up to the device that end user is using. -->
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html" rel="task-page">Task</a>
+        </li>
+        <span></span>
+        <li>
+          <a href="timer.html" rel="timer-page">Timer</a>
+        </li>
+        <span></span>
+        <li>
+          <a href="index.html" rel="content-page">Content</a>
+        </li>
+        <span></span>
+        <li>
+          <a href="index.html" rel="music-page">Music</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Tomato currency to show the current value of tomato the player have -->
+    <figure>
+      <img src="Image/tomato.png" alt="Tomato currecy icon">
+      <figcaption id="Tomato-text">0</figcaption>
+    </figure>
+  </header>
+
+  <!-- The main timer page, all the main tag in this web application will have different id due to different page styling -->
+  <main id="Timer-page">
+
+    <nav>
+      <button id="timer-pomodoro-nav">Pomodoro</button>
+      <span></span>
+      <button id="timer-stopwatch-nav">Stopwatch</button>
+    </nav>
+
+    <section id="timer-page-main">
+      <article>
+        <h1>Subject name - Assignment name</h1>
+        <h2>Task name</h2>
+        <div>
+          <label>Progress bar</label>
+          <div></div>
+        </div>
+      </article>
+      <timer-text>00:00</timer-text>
+      <button class="timer-button">START</button>
+      <button class="timer-button">RESET</button>
+    </section>
+
+    <section id="timer-page-select">
+      <button id="setting-button">
+        <img src="Image/setting.png" alt="Pomodoro setting icon button">
+      </button>
+      <article>
+        <span></span>
+        <h1>Select your task to start!</h1>
+        <span></span>
+      </article>
+    </section>
+
+  </main>
+  
+  <!-- This popup form will only show when user press setting button. So, this content have to be invisible to the user -->
+  <popup-form id="timer-setting" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+
+      <ul>
+        <!-- Pomodoro study time period -->
+        <li>
+          <label for="pomodoro-minute">Pomodoro</label>
+          <input type="number" name="pomodoro-minute" id="form-number">
+          <label for="pomodoro-second">:</label>
+          <input type="number" name="pomodoro-second" id="form-number">
+          <small></small>
+        </li>
+        <!-- Short break time -->
+        <li>
+          <label for="shortbreak-minute">Short break</label>
+          <input type="number" name="shortbreak-minute" id="form-number">
+          <label for="shortbreak-second">:</label>
+          <input type="number" name="shortbreak-second" id="form-number">
+          <small></small>
+        </li>
+        <!-- Long break time -->
+        <li>
+          <label for="longbreak-minute">Long break</label>
+          <input type="number" name="longbreak-minute" id="form-number">
+          <label for="longbreak-second">:</label>
+          <input type="number" name="longbreak-second" id="form-number">
+          <small></small>
+        </li>
+        <!-- Long break interval -->
+        <li>
+          <label for="longbreak-interval">Long break interval</label>
+          <input type="number" name="longbreak-interval" id="form-number">
+          <small></small>
+        </li>
+      </ul>
+
+      <button type="button" id="timer-reset-button">Reset to Default</button>
+      <button type="button" id="form-submit-button">Confirm</button>
+    </form>
+  </popup-form>
+
+</body>
+
+<script src="js/customElementInit.js"></script>
+<script src="js/timer.js"></script>
+
+</html>

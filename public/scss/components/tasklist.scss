@@ -95,7 +95,7 @@ $WHITE-COLOR: #EFF1F3;
         ul li ul li { cursor: pointer; &:hover{ color: $BLUE-COLOR; } }
     }
 
-    content { 
+    main-content { 
         background-color: $WHITE-COLOR;
     }
 }
@@ -143,9 +143,9 @@ $WHITE-COLOR: #EFF1F3;
     #board-kanban-lineleft { grid-area: line-left; background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5); }
     #board-kanban-lineright { grid-area: line-right; background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5); }
 
-    #board-kanban-todo { grid-area: todo; text-align: center; @include SCROLLING_LAYOUT(); }
-    #board-kanban-progress { grid-area: progress; text-align: center; @include SCROLLING_LAYOUT(); }
-    #board-kanban-done { grid-area: done; text-align: center; @include SCROLLING_LAYOUT(); }
+    #board-kanban-todo { grid-area: todo; text-align: center; @include SCROLLING_LAYOUT(); margin-right: 1vw; }
+    #board-kanban-progress { grid-area: progress; text-align: center; @include SCROLLING_LAYOUT(); margin: 0 1vw;}
+    #board-kanban-done { grid-area: done; text-align: center; @include SCROLLING_LAYOUT(); margin-left: 1vw; }
 }
 
 #board-add {
@@ -160,18 +160,14 @@ $WHITE-COLOR: #EFF1F3;
 }
 
 /* Kanban board styling */
-#board-kanban {
-
-    #board-kanban-topbar {
-
-        button {
-            // hide button only image shown
-            border: 0;
-            background: transparent;
-        }
-
-        #due-date { margin-left: 2vw; color: $RED-COLOR; } // make due-date a red text and move it a bit to the right
+#board-kanban > #board-kanban-topbar {
+    button {
+        // hide button only image shown
+        border: 0;
+        background: transparent;
     }
+
+    #due-date { margin-left: 2vw; color: $RED-COLOR; } // make due-date a red text and move it a bit to the right
 }
 
 #board-add {
@@ -181,7 +177,16 @@ $WHITE-COLOR: #EFF1F3;
     h1 { @include UNSELECTABLE_TEXT(); }
 }
 
-/* Kanban board typography */
+/* Kanban board typography 
+I really want the section heading to have semantic element which is 'h1'
+But I still want to keep a style of special text
+*/
+#board-kanban > #board-kanban-todo > h1,
+#board-kanban > #board-kanban-progress > h1,
+#board-kanban > #board-kanban-done > h1 { @include SPECIAL-FONT(); }
+
+/* Hide Task Template */
+#task-template { display: none; }
 
 /* Task note layout */
 #board-kanban > * > article {
@@ -204,7 +209,7 @@ $WHITE-COLOR: #EFF1F3;
     h2 { grid-area: header; @include TASK_CONTENT(); }
     h2 + div { grid-area: button; @include TASK_CONTENT(); display: flex; justify-content: flex-end; }
     p:first-of-type { grid-area: due; @include TASK_CONTENT(); }
-    p:nth-of-type(2) { grid-area: time; @include TASK_CONTENT(); }
+    p:nth-of-type(2) { grid-area: time; @include TASK_CONTENT(); margin-left: auto; }
     p:last-of-type { grid-area: description; @include TASK_CONTENT(); }
     p + div { 
         grid-area: progress; 
@@ -256,12 +261,11 @@ $WHITE-COLOR: #EFF1F3;
 
         // style the actual progress bar
         div {
-            width: 25%; // Independent variable placeholder (must be remove after done js)
             background-color: $GREEN-COLOR;
         }
 
         // typography of label on progress bar (make text stroke using text-shadow property because it's access more browser without using any library)
-        label { @include SUB-HEADER-FONT(); text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
+        label { @include SUB-HEADER-FONT(); z-index: 2; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
     }
 
     // hide button only image shown

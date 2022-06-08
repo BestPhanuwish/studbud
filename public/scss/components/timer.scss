@@ -1,0 +1,252 @@
+/* Declare variable */
+
+// Color-pallette
+$YELLOW-COLOR: #f2e94e;
+$DARKYELLOW-COLOR: #fed766;
+$RED-COLOR: #da3e52;
+$GREEN-COLOR: #96e6b3;
+$BLUE-COLOR: #a3d9ff;
+$BLACK-COLOR: #272727;
+$GREY-COLOR: #696773;
+$WHITE-COLOR: #EFF1F3;
+
+// Font style
+@mixin FONT-TEMPLATE($style, $weight, $size) { // act as a template for every font
+    font-style: $style;
+    font-weight: $weight;
+    font-size: $size;
+}
+
+@mixin HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 800, 24px);
+}
+
+@mixin SUB-HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 700, 18px);
+}
+
+@mixin SPECIAL-FONT {
+    @include FONT-TEMPLATE(italic, 200, 18px);
+}
+
+@mixin PARAGRAPH-FONT {
+    @include FONT-TEMPLATE(normal, 400, 12px);
+}
+
+@mixin TIMER-FONT {
+    @include FONT-TEMPLATE(normal, 800, 16vw);
+    // for phone @include FONT-TEMPLATE(normal, 800, 18vh);
+}
+
+// layout
+@mixin STOP_BUTTON_LAYOUT($margin-left, $margin-rigth) {
+    margin-bottom: auto;
+    margin-left: $margin-left;
+    margin-right: $margin-rigth;
+    padding: 0.5em 2em;
+}
+
+/* Timer page layout */
+
+
+#Timer-page {
+    // make it so the navigation select is on the top and the main section or select section filled up the whole page
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 4em 1fr;
+
+    // the timer page can't be bigger than user screen
+    max-width: 100vw;
+    max-height: 85vh; // the header height is 15vh
+    overflow: hidden;
+
+    nav { 
+        grid-area: 1 / 1 / 2 / 2;
+        padding: 1em;
+
+        // leave some space between each button
+        button { margin: 0 1em; }
+    }
+}
+
+#timer-page-main { 
+    grid-area: 2 / 1 / 3 / 2;
+
+    // layout its child area
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 18vh 1fr 20vh;
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "info info"
+      "timer timer"
+      "button1 button2"; 
+
+    // task information layout
+    article { 
+        grid-area: info;
+        display: block;
+
+        // move info to the center of the screen
+        text-align: center;
+        margin-top: auto;
+
+        // make all the child have small margin
+        h1, h2 { margin: 0.5em 0; }
+
+        // except the progress bar is a bit special
+        div { 
+            width: 18em; 
+            height: 2em;
+            margin: 0 auto; 
+
+            // make the progress bar child overlap each others
+            display: grid; 
+            grid-template-columns: 1fr; 
+            grid-template-rows: 1fr; 
+            label { grid-area: 1 / 1 / 2 / 2; margin-top: auto; }
+            div { grid-area: 1 / 1 / 2 / 2; height: 100%; }
+        }
+    }
+
+    // timer text layout
+    timer-text { 
+        grid-area: timer;
+        text-align: center;
+        margin: auto;
+    }
+
+    // the button layout
+    button:first-of-type { grid-area: button1; @include STOP_BUTTON_LAYOUT(auto, 4vw); }
+    button:last-of-type { grid-area: button2; @include STOP_BUTTON_LAYOUT(4vw, auto); }
+}
+
+#timer-page-select { 
+    grid-area: 2 / 1 / 3 / 2;
+
+    article {
+        width: 100%;
+        height: 100%;
+
+        // move its children to the center of the screen
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        // reset the margin of text
+        h1 { margin: 0; }
+
+        // positioning the span
+        span { margin: 1em; }
+    }
+
+    #setting-button {
+        width: 10vh; 
+        height: 10vh;
+        float: right;
+
+        // make the image on the center of the button
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img { min-width: 8vh; min-height: 8vh; } // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+    }
+}
+
+
+/* Timer page styling */
+
+
+#Timer-page {
+    background-color: $RED-COLOR;
+}
+
+#Timer-page nav button {
+    // text button properties
+    cursor: pointer;
+    color: $WHITE-COLOR;
+    text-decoration: none;
+
+    // hide button only text shown
+    border: 0;
+    background: transparent;
+
+    // event
+    &:hover { color: $BLACK-COLOR; }
+    &:active { text-decoration: underline; }
+}
+
+#Timer-page nav span {
+    display: inline-block;
+    background-color: $WHITE-COLOR;
+    width: 0.1em;
+    height: 1.5em;
+}
+
+// hide the main page at the start
+#timer-page-main { visibility: hidden; }
+
+// color the main text on the page (it will change dynamically)
+#timer-page-main article h1, 
+#timer-page-main article h2, 
+timer-text { color: $WHITE-COLOR; }
+
+// style the progress bar frame outline
+#timer-page-main article div {
+    background-color: rgba($color: $GREY-COLOR, $alpha: 0.2);
+    border-radius: 25px;
+    text-align: center;
+
+    // style the actual progress bar
+    div {
+        z-index: 1;
+        background-color: $GREEN-COLOR;
+        position: relative;
+
+        // these variable wiil change later on in js
+        right: 20%;
+        width: 60%;
+    }
+
+    // typography of label on progress bar (make text stroke using text-shadow property because it's access more browser without using any library)
+    label { @include SUB-HEADER-FONT(); z-index: 2; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
+}
+
+// style the button
+.timer-button {
+    border: 0.2em solid $GREY-COLOR;
+
+    // make button looks clickable
+    &:hover { 
+        cursor: pointer; 
+        color: $WHITE-COLOR; 
+    }
+}
+
+// style the setting button
+#setting-button {
+    // hide button only text shown
+    border: 0;
+    background: transparent;
+
+    // event
+    &:hover { cursor: pointer; }
+}
+
+#timer-page-select article:hover { cursor: pointer; }
+
+#timer-page-select h1 { color: $WHITE-COLOR; }
+
+#timer-page-select span {
+    display: inline-block;
+    background-color: $WHITE-COLOR;
+    width: 2em;
+    height: 0.5em;
+}
+
+
+/* Timer page typography */
+#Timer-page nav button { @include SPECIAL-FONT(); }
+timer-text { @include TIMER-FONT(); }
+.timer-button { @include HEADER-FONT(); }

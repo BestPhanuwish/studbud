@@ -60,9 +60,19 @@ for accessible purpose
 */
 popup-form { 
     @include SPECIAL-FONT();
-    grid-area: 1 / 1 / 3 / 2; 
-    z-index: 998; 
+
+    // make the form filled up the whole page and mvoe followed user
+    grid-area: 1 / 1 / 3 / 2;
+    z-index: 998;
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+
+    // make the form invisible
     visibility: hidden;
+
+    // adjust its child at center of the screen
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,7 +109,7 @@ popup-form {
 input, select, textarea {
     background: $WHITE-COLOR;
     width: 100%;
-    height: 4vh;
+    height: 2em;
     border: 1px solid $GREY-COLOR;
 
     &:hover {
@@ -159,29 +169,72 @@ button:hover { cursor: pointer; }
     }
 }
 
+#timer-reset-button {
+    margin: 1em 0;
+    border: 0.2em solid $GREY-COLOR;
+    @include SUB-HEADER-FONT();
+
+    &:hover { color: $GREY-COLOR; }
+}
+
+// Special input format
+#form-due {
+    margin-left: 2vw;
+    width: 8em;
+}
+
+#form-number {
+    width: 2.5em;
+
+    &:first-of-type { margin-left: 2vw; }
+}
+
+#form-radio-list {
+    display: flex;
+    flex-direction: row;
+
+    // customise the input styling
+    input {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        width: 1px;
+
+        // when checked change its styling
+        &:checked+label { background-color: $BLUE-COLOR; color: $WHITE-COLOR; }
+    }
+
+    // make the first label (which is the question) not affect by input styling and move all the button to the right
+    label:first-child { margin-right: 2vw; }
+
+    // styling the label which will acts as a radio button instead
+    label:not(:first-child) {
+        text-align: center;
+        padding: 0 1em;
+        border: 2px solid $BLUE-COLOR;
+
+        &:hover { cursor: pointer; }
+    }
+}
+
+#form-textarea {
+    height: 5em;
+}
+
 /* Add and Edit assignment form layout */
 #add-assignment form, #edit-assignment form {
     @include POPUP-FORM-STYLING();
     
-    width: 40vw;
-    left: 30vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-evenly;
 }
 
-#form-due {
-    margin-left: 2vw;
-    width: 150px;
-}
-
-/* Mark done and Delete assignment form layout */
-#mark-assignment form, #delete-assignment form {
+/* Mark done and Delete task and assignment form layout */
+#mark-assignment form, #delete-assignment form, #delete-task form {
     @include POPUP-FORM-STYLING();
 
-    width: 40vw;
-    left: 30vw;
     display: grid; 
     grid-auto-columns: 1fr; 
     grid-template-columns: 1fr 1fr; 
@@ -194,4 +247,24 @@ button:hover { cursor: pointer; }
     h3 { grid-area: content; }
     #form-no-button { grid-area: no; }
     #form-yes-button { grid-area: yes; }
+}
+
+/* Add task form layout */
+#add-task form {
+    @include POPUP-FORM-STYLING();
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+/* Add and Edit assignment form layout */
+#timer-setting form {
+    @include POPUP-FORM-STYLING();
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
 }
