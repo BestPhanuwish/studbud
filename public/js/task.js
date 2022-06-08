@@ -138,7 +138,7 @@ var assignmentForm = document.getElementById("add-assignment");
 var assignmentSubmitButton = assignmentForm.querySelector("form > #form-submit-button");
 var assignmentExitButton = assignmentForm.querySelector("form > #form-exit-button");
 var assignmentBackground = assignmentForm.getElementsByTagName("div")[0];
-var assignmentSelectBox = assignmentForm.getElementsByTagName("select")[0];
+var assignmentSelectBox = assignmentForm.getElementsByTagName("select")[0]; // assignment select box does not mean it is select box for assignment, but it's select box for add an assignment form
 
 var asideNavigationTree = document.querySelector("#Task-List > aside > #assignment-selector");
 

@@ -128,8 +128,42 @@
         </li>
       </ul>
 
-      <button type="button" id="timer-reset-button">Reset to Default</button>
+      <button type="button" id="setting-reset-button">Reset to Default</button>
       <button type="button" id="form-submit-button">Confirm</button>
+    </form>
+  </popup-form>
+
+  <!-- This popup form will only show when user try to select task. So, this content have to be invisible to the user -->
+  <popup-form id="timer-select" open>
+    <div></div>
+    <form>
+      <button type="button" id="form-exit-button">X</button>
+
+      <ul>
+        <!-- Subject Select (fill the content by js) -->
+        <li>
+          <label for="subject">Subject</label>
+          <select name="subject" required>
+          </select>
+          <small></small>
+        </li>
+        <!-- Assignment Select (fill the content by js) -->
+        <li>
+          <label for="assignment">Assignment</label>
+          <select name="assignment" required>
+          </select>
+          <small></small>
+        </li>
+        <!-- Task Select (fill the content by js) -->
+        <li>
+          <label for="task">Task</label>
+          <select name="task" required>
+          </select>
+          <small></small>
+        </li>
+      </ul>
+
+      <button type="button" id="form-submit-button">Start</button>
     </form>
   </popup-form>
 

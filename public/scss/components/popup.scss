@@ -51,6 +51,13 @@ $WHITE-COLOR: #EFF1F3;
     padding: 4vh 2vw;
 }
 
+@mixin POPUP-FORM-LAYOUT {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
 /* Form popup general styling 
 the popup have to be in the front and cover the whole page
 the background and actual form is seperate because we want
@@ -169,7 +176,7 @@ button:hover { cursor: pointer; }
     }
 }
 
-#timer-reset-button {
+#setting-reset-button {
     margin: 1em 0;
     border: 0.2em solid $GREY-COLOR;
     @include SUB-HEADER-FONT();
@@ -224,11 +231,7 @@ button:hover { cursor: pointer; }
 /* Add and Edit assignment form layout */
 #add-assignment form, #edit-assignment form {
     @include POPUP-FORM-STYLING();
-    
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
+    @include POPUP-FORM-LAYOUT();
 }
 
 /* Mark done and Delete task and assignment form layout */
@@ -252,19 +255,11 @@ button:hover { cursor: pointer; }
 /* Add task form layout */
 #add-task form {
     @include POPUP-FORM-STYLING();
-    
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
+    @include POPUP-FORM-LAYOUT();
 }
 
-/* Add and Edit assignment form layout */
-#timer-setting form {
+/* Timer setting and select task form layout */
+#timer-setting form, #timer-select form {
     @include POPUP-FORM-STYLING();
-    
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-evenly;
+    @include POPUP-FORM-LAYOUT();
 }
