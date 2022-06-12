@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+  <title>STUDBUD - Music</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Organise your assignment task and fun" />
+  <meta name="keywords" content="Studbud, study tool, assignment helper">
+  <meta name="author" content="Best Phanuwish">
+  <!-- <link rel="icon" href="img.favicon.png"> -->
+  <link rel="stylesheet" href="scss/main.scss">
+  <!-- Import Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;1,200&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- This header will be the same for every page of this web application, acts as a top bar navigation so user can always select whatever tool they wish to use -->
+  <header>
+    <!-- The link and logo image, when the user click on the logo. It's go to the task list page (which is homepage of this website) for accessibility purpose. -->
+    <a href="index.html" title="STUDBUD" rel="home">
+      <img src="Image/Studbud-Logo(demo).png" alt="STUDBUD's logo image">
+    </a>
+
+    <!-- This navigation tab will acts different up to the device that end user is using. -->
+    <nav>
+      <ul>
+        <li>
+          <a href="index.html" rel="task-page">Task</a>
+        </li>
+        <span></span>
+        <li>
+          <a href="timer.html" rel="timer-page">Timer</a>
+        </li>
+        <span></span>
+        <li>
+          <a href="content.html" rel="content-page">Content</a>
+        </li>
+        <span></span>
+        <li>
+          <a href="music.html" rel="music-page">Music</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Tomato currency to show the current value of tomato the player have -->
+    <figure class="Tomato-text">
+      <img src="Image/tomato.png" alt="Tomato currecy icon">
+      <figcaption id="Tomato-text">0</figcaption>
+    </figure>
+  </header>
+
+  <!-- The main content page, all the main tag in this web application will have different id due to different page styling -->
+  <main id="Music-Page">
+
+    <!-- User able to add music to the music list by pasting YouTube link video, so the user able to listen to music that they like. However, the user need to paid 1 tomato. This will encourage user to keep on studying so they get some reward which is music that they enjoyed -->
+    <form>
+      <button type="button">
+        <figure class="Tomato-text">
+          <img src="Image/tomato.png" alt="Tomato currecy icon">
+          <figcaption>1</figcaption>
+        </figure>
+      </button>
+      <div>
+        <input id="URL-input" placeholder="Enter YouTube URL (e.g. https://www.youtube.com/watch?v=MtN1YnoL46Q)">
+        <small></small>
+      </div>
+    </form>
+
+    <!-- All the section under main-content are add dynamically, because it's used data from task page to load its conetnt. If not data not exist, there will not be any content on this page -->
+    <main-content>
+      <h1>Song name</h1>
+      <h3>Author</h3>
+      <img src="Image/tbExample.jpeg" alt="YouTube Thumbnail Image">
+      <div>
+        <button>
+          <img src="Image/skipLeft.png" alt="Skip to left button">
+        </button>
+        <button id="music-pause">
+          <img src="Image/pause.png" alt="Pause music button">
+        </button>
+        <button id="music-play">
+          <img src="Image/play.png" alt="Play music button">
+        </button>
+        <button>
+          <img src="Image/skipRight.png" alt="Skip to right button">
+        </button>
+      </div>
+    </main-content>
+
+    <!-- This aside will contains a list of music that user have in local storage where it will be add dynamically, and user able to navigate to each songs on music list that user have -->
+    <aside>
+      <h2>Music List</h2>
+      <ul id="music-selector">
+        <li>
+          <figure>
+            <img src="Image/tbExample.jpeg" alt="">
+            <img class="music-cover-image" src="Image/tbOverlay.png" alt="Cover current played music">
+            <figcaption>Song Name</figcaption>
+          </figure>
+          <button id="drag-button">
+            <img src="Image/drag.png" alt="Drag music button">
+          </button>
+          <button id="delete-button">
+            <img src="Image/delete.png" alt="Delete music button">
+          </button>
+        </li>
+        <li>
+          <figure>
+            <img src="Image/tbExample.jpeg" alt="">
+            <img class="music-cover-image" src="Image/tbOverlay.png" alt="Cover current played music">
+            <figcaption>Song Name</figcaption>
+          </figure>
+          <button id="drag-button">
+            <img src="Image/drag.png" alt="Drag music button">
+          </button>
+          <button id="delete-button">
+            <img src="Image/delete.png" alt="Delete music button">
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+  </main>
+
+  <!-- This section is acts as a template and will get clone dynamically. So, this content have to be invisible to the user -->
+  <section id="" class="content-template">
+    <section-topbar>
+      <h1></h1>
+      <button>
+        <img src="Image/plus.png" alt="Add new content button">
+      </button>
+    </section-topbar> 
+    <span></span>
+    <section-content>
+
+    </section-content>
+  </section>
+
+  <!-- This article is acts as a template and will get clone as a content note. So, this content have to be invisible to the user -->
+  <article class="content-template">
+    <h2></h2>
+    <div>
+      <button id="edit-button">
+        <img src="Image/edit.png" alt="Edit task button">
+      </button>
+      <button id="delete-button">
+        <img src="Image/delete.png" alt="Delete task button">
+      </button>
+    </div>
+    <p></p>
+    <p></p>
+    <span></span>
+    <ul>
+      <li>
+        <img src="Image/link.png" alt="Link icon">
+        <a href="" target="_blank" rel="noopener noreferrer"></a>
+      </li>
+    </ul>
+  </article>
+
+</body>
+
+<script src="js/customElementInit.js"></script>
+<script src="js/music.js"></script>
+
+</html>

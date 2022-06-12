@@ -58,6 +58,22 @@ $WHITE-COLOR: #EFF1F3;
     justify-content: space-evenly;
 }
 
+@mixin BUTTON_IMAGE_STYLE($buttonSize, $minSize) {
+    // hide button only image shown
+    border: 0;
+    background: transparent;
+
+    // set the button so it fit with top bar size
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $buttonSize;
+    height: $buttonSize; 
+
+    // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+    img { min-width: $minSize; min-height: $minSize; }
+}
+
 /* Form popup general styling 
 the popup have to be in the front and cover the whole page
 the background and actual form is seperate because we want
@@ -114,7 +130,7 @@ popup-form {
 }
 
 input, select, textarea {
-    background: $WHITE-COLOR;
+    background: white;
     width: 100%;
     height: 2em;
     border: 1px solid $GREY-COLOR;
@@ -228,14 +244,47 @@ button:hover { cursor: pointer; }
     height: 5em;
 }
 
-/* Add and Edit assignment form layout */
-#add-assignment form, #edit-assignment form {
+li.form-inline-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    *:not(label, img) { margin-left: 1em; }
+}
+
+li.form-link-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    // make the link looks clickable
+    a {
+        color: $BLUE-COLOR;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover { color: $BLACK-COLOR; }
+        &:active { text-decoration: underline; }
+    }
+}
+#link-template { display: none; } // don't forget to change to flex after clone
+
+button.link-add-button {
+    @include BUTTON_IMAGE_STYLE(2em, 1.5em);
+}
+
+button.link-delete-button {
+    @include BUTTON_IMAGE_STYLE(1em, 1em);
+}
+
+/* Form layout */
+.normal-form {
     @include POPUP-FORM-STYLING();
     @include POPUP-FORM-LAYOUT();
 }
 
-/* Mark done and Delete task and assignment form layout */
-#mark-assignment form, #delete-assignment form, #delete-task form {
+.yesorno-form {
     @include POPUP-FORM-STYLING();
 
     display: grid; 
@@ -250,16 +299,4 @@ button:hover { cursor: pointer; }
     h3 { grid-area: content; }
     #form-no-button { grid-area: no; }
     #form-yes-button { grid-area: yes; }
-}
-
-/* Add task form layout */
-#add-task form {
-    @include POPUP-FORM-STYLING();
-    @include POPUP-FORM-LAYOUT();
-}
-
-/* Timer setting and select task form layout */
-#timer-setting form, #timer-select form {
-    @include POPUP-FORM-STYLING();
-    @include POPUP-FORM-LAYOUT();
 }

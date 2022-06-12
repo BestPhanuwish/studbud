@@ -30,7 +30,14 @@ class TimerText extends HTMLElement {
         super();
     }
 }
+
+class SectionTopbar extends HTMLElement {
+    constructor() {
+        super();
+    }
+}
   
 customElements.define("popup-form", PopupForm);
 customElements.define("main-content", MainContent);
 customElements.define("timer-text", TimerText);
+customElements.define("section-topbar", SectionTopbar);

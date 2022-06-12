@@ -1,0 +1,219 @@
+/* Declare variable */
+
+// Color-pallette
+$YELLOW-COLOR: #f2e94e;
+$DARKYELLOW-COLOR: #fed766;
+$RED-COLOR: #da3e52;
+$GREEN-COLOR: #96e6b3;
+$BLUE-COLOR: #a3d9ff;
+$BLACK-COLOR: #272727;
+$GREY-COLOR: #696773;
+$WHITE-COLOR: #EFF1F3;
+
+// Font style
+@mixin FONT-TEMPLATE($style, $weight, $size) { // act as a template for every font
+    font-style: $style;
+    font-weight: $weight;
+    font-size: $size;
+}
+
+@mixin HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 800, 24px);
+}
+
+@mixin SUB-HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 700, 18px);
+}
+
+@mixin SPECIAL-FONT {
+    @include FONT-TEMPLATE(italic, 200, 18px);
+}
+
+@mixin PARAGRAPH-FONT {
+    @include FONT-TEMPLATE(normal, 400, 12px);
+}
+
+@mixin SMALL-FONT {
+    @include FONT-TEMPLATE(normal, 200, 10px);
+}
+
+// Layout variable
+@mixin SCROLLING_LAYOUT {
+    display: block; 
+    overflow-y: auto; 
+    word-wrap: break-word;
+}
+
+@mixin CONTENT_OVERFLOW {
+    margin: 0.25em 0;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+@mixin BUTTON_IMAGE_STYLE($display, $buttonSize, $minSize) {
+    // hide button only image shown
+    border: 0;
+    background: transparent;
+
+    // set the button so it fit with top bar size
+    display: $display;
+    justify-content: center;
+    align-items: center;
+    width: $buttonSize;
+    height: $buttonSize; 
+
+    // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+    img { min-width: $minSize; min-height: $minSize; }
+}
+
+/* Music page layout */
+#Music-Page {
+    // split form, aside nav, and main content with grid layout
+    display: grid; 
+    grid-template-columns: 1fr 18em; 
+    grid-template-rows: 8em 1fr;
+    grid-template-areas: 
+      "form form"
+      "content aside"; 
+
+    form {
+        grid-area: form;
+        padding: 0 4em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        div { width: 100%; margin-left: 2em; }
+        button { padding-right: 2em; }
+    }
+
+    main-content { 
+        grid-area: content; 
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        > img { 
+            // recommended youtube thumbnail size
+            max-width: 38vw;
+            max-height: 38vh;
+            width: 1280px;
+            height: 720px;
+            margin: 2em;
+        }
+
+        div { width: 100%; display: flex; justify-content: space-evenly; }
+    }
+
+    aside { 
+        @include SCROLLING_LAYOUT();
+        grid-area: aside; 
+        padding: 20px;
+        h3 { display: inline; }
+        button { display: inline; }
+    }
+}
+
+/* Music page styling */
+#Music-Page {
+
+    form {
+        background-color: $WHITE-COLOR;
+        width: 100%;
+        overflow: hidden;
+
+        input { background-color: white; }
+        small { color: $RED-COLOR; }
+        button {
+            border: 0.2em solid $GREY-COLOR;
+            @include SUB-HEADER-FONT();
+        
+            &:hover { background-color: white; }
+        }
+    }
+
+    main-content { 
+        background-color: $WHITE-COLOR;
+        width: 100%;
+        overflow: hidden;
+
+        > img { border: 0.2em solid $GREY-COLOR; }
+        button {  
+            // hide button only image shown
+            border: 0;
+            background: transparent;
+
+            // set the button so it fit with top bar size
+            width: 3.5em;
+            height: 3.5em; 
+
+            // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+            img { min-width: 3em; min-height: 3em; }
+        }
+    }
+
+    aside { 
+        background-color: $YELLOW-COLOR;
+
+        // hide the list dot point on aside navigation
+        ul { list-style: none; }
+        ul li a { cursor: pointer; &:hover{ color: $BLUE-COLOR; } }
+    }
+}
+
+// hide pause button
+#music-pause { display: none; }
+
+/* Music page typography */
+#Music-Page form input { @include SPECIAL-FONT(); }
+#Music-Page form small { @include SMALL-FONT(); }
+
+
+/* Song List layout */
+#music-selector {
+    display: block;
+    list-style: none;
+    padding-left: 0;
+
+    li { display: flex;}
+    li button { display: inline; }
+
+    button {
+        @include BUTTON_IMAGE_STYLE(inline, 1.5rem, 1rem);
+    }
+
+    figure {
+        display: grid;
+        grid-template-columns: auto; 
+        grid-template-rows: auto auto; 
+        img, img.music-cover-image { grid-area: 1 / 1 / 2 / 2; }
+        figcaption { grid-area: 2 / 1 / 3 / 2; }
+    }
+
+    // move the cover image the same position of thumbnail image
+    img.music-cover-image {
+        z-index: 2;
+    }
+}
+
+/* Song List styling */
+#music-selector {
+    figure { cursor: pointer; }
+
+    // hide the cover image
+    img.music-cover-image {
+        opacity: 0;
+        transition: 0.2s ease-out;
+    }
+
+    // when user hover the image then it show up
+    figure:hover img.music-cover-image {
+        opacity: 0.5;
+    }
+}
+
+/* Song List typography */
+#music-selector figcaption { @include SMALL-FONT(); }

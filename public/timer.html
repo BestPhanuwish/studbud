@@ -37,41 +37,41 @@
         </li>
         <span></span>
         <li>
-          <a href="index.html" rel="content-page">Content</a>
+          <a href="content.html" rel="content-page">Content</a>
         </li>
         <span></span>
         <li>
-          <a href="index.html" rel="music-page">Music</a>
+          <a href="music.html" rel="music-page">Music</a>
         </li>
       </ul>
     </nav>
 
     <!-- Tomato currency to show the current value of tomato the player have -->
-    <figure>
+    <figure class="Tomato-text">
       <img src="Image/tomato.png" alt="Tomato currecy icon">
       <figcaption id="Tomato-text">0</figcaption>
     </figure>
   </header>
 
   <!-- The main timer page, all the main tag in this web application will have different id due to different page styling -->
-  <main id="Timer-page">
+  <main id="Timer-page" class="time-pomodoro">
 
     <nav>
-      <button id="timer-pomodoro-nav">Pomodoro</button>
+      <button id="timer-pomodoro-nav" class="time-text-white">Pomodoro</button>
       <span></span>
-      <button id="timer-stopwatch-nav">Stopwatch</button>
+      <button id="timer-stopwatch-nav" class="time-text-white">Stopwatch</button>
     </nav>
 
     <section id="timer-page-main">
       <article>
-        <h1>Subject name - Assignment name</h1>
-        <h2>Task name</h2>
+        <h1 class="time-text-white">Subject name - Assignment name</h1>
+        <h2 class="time-text-white">Task name</h2>
         <div>
           <label>Progress bar</label>
           <div></div>
         </div>
       </article>
-      <timer-text>00:00</timer-text>
+      <timer-text class="time-text-white">00:00</timer-text>
       <button class="timer-button">START</button>
       <button class="timer-button">RESET</button>
     </section>
@@ -82,17 +82,21 @@
       </button>
       <article>
         <span></span>
-        <h1>Select your task to start!</h1>
+        <h1 class="time-text-white">Select your task to start!</h1>
         <span></span>
       </article>
     </section>
 
   </main>
+
+  <!-- Audio source that will play on JavaScript will be kept here and hide it on layout.scss. This audio tag will use to play music at the start -->
+  <audio src="Sound/button.mp3" id="button-sound"></audio>
+  <audio src="Sound/alarm.mp3" id="alarm-sound"></audio>
   
   <!-- This popup form will only show when user press setting button. So, this content have to be invisible to the user -->
   <popup-form id="timer-setting" open>
     <div></div>
-    <form>
+    <form class="normal-form">
       <button type="button" id="form-exit-button">X</button>
 
       <ul>
@@ -136,7 +140,7 @@
   <!-- This popup form will only show when user try to select task. So, this content have to be invisible to the user -->
   <popup-form id="timer-select" open>
     <div></div>
-    <form>
+    <form class="normal-form">
       <button type="button" id="form-exit-button">X</button>
 
       <ul>
@@ -164,6 +168,16 @@
       </ul>
 
       <button type="button" id="form-submit-button">Start</button>
+    </form>
+  </popup-form>
+
+  <!-- This popup form will only show when user succeed their task. So, this content have to be invisible to the user -->
+  <popup-form id="timer-congrat" open>
+    <div></div>
+    <form class="normal-form">
+      <button type="button" id="form-exit-button">X</button>
+      <h3>Congratulation! You have done your task!</h3>
+      <button type="button" id="form-submit-button">Ok</button>
     </form>
   </popup-form>
 

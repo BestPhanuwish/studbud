@@ -37,17 +37,17 @@
         </li>
         <span></span>
         <li>
-          <a href="index.html" rel="content-page">Content</a>
+          <a href="content.html" rel="content-page">Content</a>
         </li>
         <span></span>
         <li>
-          <a href="index.html" rel="music-page">Music</a>
+          <a href="music.html" rel="music-page">Music</a>
         </li>
       </ul>
     </nav>
 
     <!-- Tomato currency to show the current value of tomato the player have -->
-    <figure>
+    <figure class="Tomato-text">
       <img src="Image/tomato.png" alt="Tomato currecy icon">
       <figcaption id="Tomato-text">0</figcaption>
     </figure>
@@ -154,7 +154,7 @@
   <!-- This popup form will only show when user add the new assignment. So, this content have to be invisible to the user -->
   <popup-form id="add-assignment" open>
     <div></div>
-    <form>
+    <form class="normal-form">
       <button type="button" id="form-exit-button">X</button>
 
       <ul>
@@ -192,7 +192,7 @@
   <!-- This popup form will only show when user mark done an assignment. So, this content have to be invisible to the user -->
   <popup-form id="mark-assignment" open>
     <div></div>
-    <form>
+    <form class="yesorno-form">
       <button type="button" id="form-exit-button">X</button>
       <h3>Are you sure you want to mark an assignment as done?</h3>
       <button type="button" id="form-no-button">No</button>
@@ -203,7 +203,7 @@
   <!-- This popup form will only show when user try to edit an assignment. So, this content have to be invisible to the user -->
   <popup-form id="edit-assignment" open>
     <div></div>
-    <form>
+    <form class="normal-form">
       <button type="button" id="form-exit-button">X</button>
 
       <ul>
@@ -234,7 +234,7 @@
   <!-- This popup form will only show when user try to delete an assignment. So, this content have to be invisible to the user -->
   <popup-form id="delete-assignment" open>
     <div></div>
-    <form>
+    <form class="yesorno-form">
       <button type="button" id="form-exit-button">X</button>
       <h3>Are you sure you want to delete this assignment?</h3>
       <button type="button" id="form-no-button">No</button>
@@ -245,7 +245,7 @@
   <!-- This popup form will only show when user add the new task or edit task on kanbanboard. So, this content have to be invisible to the user -->
   <popup-form id="add-task" open>
     <div></div>
-    <form>
+    <form class="normal-form">
       <button type="button" id="form-exit-button">X</button>
 
       <ul>
@@ -305,7 +305,7 @@
   <!-- This popup form will only show when user try to delete the task on kanbanboard. So, this content have to be invisible to the user -->
   <popup-form id="delete-task" open>
     <div></div>
-    <form>
+    <form class="yesorno-form">
       <button type="button" id="form-exit-button">X</button>
       <h3>Are you sure you want to delete this task?</h3>
       <button type="button" id="form-no-button">No</button>

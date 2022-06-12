@@ -53,11 +53,27 @@ $WHITE-COLOR: #EFF1F3;
     word-wrap: break-word;
 }
 
+@mixin BUTTON_IMAGE_STYLE($display, $buttonSize, $minSize) {
+    // hide button only image shown
+    border: 0;
+    background: transparent;
+
+    // set the button so it fit with top bar size
+    display: $display;
+    justify-content: center;
+    align-items: center;
+    width: $buttonSize;
+    height: $buttonSize; 
+
+    // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+    img { min-width: $minSize; min-height: $minSize; }
+}
+
 /* Task page layout */
 #Task-List {
     // split aside nav and main content with grid layout
     display: grid; 
-    grid-template-columns: 20% 1fr; 
+    grid-template-columns: 18em 1fr; 
     grid-template-rows: 1fr;
     grid-template-areas: 
         "aside content"; 
@@ -81,10 +97,9 @@ $WHITE-COLOR: #EFF1F3;
 
     aside { 
         background-color: $YELLOW-COLOR;
+        
         button {
-            // hide button only image shown
-            border: 0;
-            background: transparent;
+            @include BUTTON_IMAGE_STYLE(inline, 5vh, 3.5vh)
         }
 
         // hide the list dot point on aside navigation
@@ -130,12 +145,8 @@ $WHITE-COLOR: #EFF1F3;
 
         h1 { display: inline; }
 
-        button { // set the button so it fit with top bar size
-            display: inline;
-            width: 5vh; 
-            height: 5vh; 
-
-            img { min-width: 3.5vh; min-height: 3.5vh; } // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+        button {
+            @include BUTTON_IMAGE_STYLE(inline, 5vh, 3.5vh)
         }
     }
 
@@ -160,15 +171,7 @@ $WHITE-COLOR: #EFF1F3;
 }
 
 /* Kanban board styling */
-#board-kanban > #board-kanban-topbar {
-    button {
-        // hide button only image shown
-        border: 0;
-        background: transparent;
-    }
-
-    #due-date { margin-left: 2vw; color: $RED-COLOR; } // make due-date a red text and move it a bit to the right
-}
+#board-kanban > #board-kanban-topbar #due-date { margin-left: 2vw; color: $RED-COLOR; } // make due-date a red text and move it a bit to the right
 
 #board-add {
     cursor: pointer;
@@ -223,12 +226,8 @@ But I still want to keep a style of special text
     }
 
 
-    div > button { // set the button so it fit with note
-        display: inline;
-        width: 1.5rem; 
-        height: 1.5rem; 
-
-        img { min-width: 1rem; min-height: 1rem; }
+    div > button {
+        @include BUTTON_IMAGE_STYLE(inline, 1.5rem, 1rem)
     }
 }
 
@@ -266,12 +265,6 @@ But I still want to keep a style of special text
 
         // typography of label on progress bar (make text stroke using text-shadow property because it's access more browser without using any library)
         label { @include SUB-HEADER-FONT(); z-index: 2; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
-    }
-
-    // hide button only image shown
-    div > button {
-        border: 0;
-        background: transparent;
     }
 }
 

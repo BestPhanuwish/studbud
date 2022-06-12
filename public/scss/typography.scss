@@ -66,9 +66,10 @@ header {
             text-decoration: underline;
         }
     }
+}
 
-    figure figcaption {
-        @include TOMATO-FONT();
-        color: $RED-COLOR;
-    }
+/* Tomato currency typography */
+figure.Tomato-text figcaption {
+    @include TOMATO-FONT();
+    color: $RED-COLOR;
 }

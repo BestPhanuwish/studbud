@@ -123,6 +123,7 @@ function LoadTomato() {
     tomatoText.value = tomato;
     tomatoText.innerText = tomato;
 }
+LoadTomato();
 
 /*
 Task page
@@ -132,6 +133,7 @@ Below are script that will accociated with task page only
 
 /* variable */
 
+// DOM
 var boardAddButton = document.querySelector("#Task-List > main-content > #board-add");
 var assignmentAddButton = document.querySelector("#Task-List > aside > button");
 var assignmentForm = document.getElementById("add-assignment");
@@ -502,7 +504,7 @@ function LoadKanbanboardCanvas() {
                 else
                     taskForm.querySelector("#high").checked = true;
                 
-                if (task.isDone)
+                if (task.isDone == true)
                     taskForm.querySelector("#done").checked = true;
                 else
                     taskForm.querySelector("#not-done").checked = true;

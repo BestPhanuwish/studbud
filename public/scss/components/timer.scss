@@ -66,6 +66,13 @@ $WHITE-COLOR: #EFF1F3;
 
         // leave some space between each button
         button { margin: 0 1em; }
+
+        // positioning the span line
+        span {
+            display: inline-block;
+            width: 0.1em;
+            height: 1.5em;
+        }
     }
 }
 
@@ -137,7 +144,12 @@ $WHITE-COLOR: #EFF1F3;
         h1 { margin: 0; }
 
         // positioning the span
-        span { margin: 1em; }
+        span { 
+            display: inline-block;
+            width: 2em;
+            height: 0.5em;
+            margin: 1em; 
+        }
     }
 
     #setting-button {
@@ -158,14 +170,10 @@ $WHITE-COLOR: #EFF1F3;
 /* Timer page styling */
 
 
-#Timer-page {
-    background-color: $RED-COLOR;
-}
-
+// button styling
 #Timer-page nav button {
     // text button properties
     cursor: pointer;
-    color: $WHITE-COLOR;
     text-decoration: none;
 
     // hide button only text shown
@@ -173,24 +181,16 @@ $WHITE-COLOR: #EFF1F3;
     background: transparent;
 
     // event
-    &:hover { color: $BLACK-COLOR; }
+    &.time-text-white:hover { color: $BLACK-COLOR; }
+    &.time-text-black:hover { color: $GREY-COLOR; }
     &:active { text-decoration: underline; }
 }
 
-#Timer-page nav span {
-    display: inline-block;
-    background-color: $WHITE-COLOR;
-    width: 0.1em;
-    height: 1.5em;
-}
+// initial style color
+#Timer-page span { background-color: $WHITE-COLOR; }
 
 // hide the main page at the start
 #timer-page-main { visibility: hidden; }
-
-// color the main text on the page (it will change dynamically)
-#timer-page-main article h1, 
-#timer-page-main article h2, 
-timer-text { color: $WHITE-COLOR; }
 
 // style the progress bar frame outline
 #timer-page-main article div {
@@ -205,12 +205,14 @@ timer-text { color: $WHITE-COLOR; }
         position: relative;
 
         // these variable wiil change later on in js
-        right: 20%;
-        width: 60%;
+        transition: right 0.5s ease;
+        transition: width 0.5s ease;
+        right: 50%;
+        width: 0%;
     }
 
-    // typography of label on progress bar (make text stroke using text-shadow property because it's access more browser without using any library)
-    label { @include SUB-HEADER-FONT(); z-index: 2; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
+    // style of label on progress bar (make text stroke using text-shadow property because it's access more browser without using any library)
+    label { z-index: 2; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
 }
 
 // style the button
@@ -234,19 +236,23 @@ timer-text { color: $WHITE-COLOR; }
     &:hover { cursor: pointer; }
 }
 
+// make the background of text select page under text looks clicable
 #timer-page-select article:hover { cursor: pointer; }
 
-#timer-page-select h1 { color: $WHITE-COLOR; }
+// page background event color transition
+@mixin TRANSITION_PROPERTY { transition: background-color 0.5s ease; }
+.time-pomodoro { background-color: $RED-COLOR; @include TRANSITION_PROPERTY(); }
+.time-stopwatch { background-color: $WHITE-COLOR; @include TRANSITION_PROPERTY(); }
+.time-shortbreak { background-color: $GREEN-COLOR; @include TRANSITION_PROPERTY(); }
+.time-longbreak { background-color: $BLUE-COLOR; @include TRANSITION_PROPERTY(); }
 
-#timer-page-select span {
-    display: inline-block;
-    background-color: $WHITE-COLOR;
-    width: 2em;
-    height: 0.5em;
-}
+// page text event color transition
+.time-text-white { color: $WHITE-COLOR; @include TRANSITION_PROPERTY(); }
+.time-text-black { color: $BLACK-COLOR; @include TRANSITION_PROPERTY(); }
 
 
 /* Timer page typography */
 #Timer-page nav button { @include SPECIAL-FONT(); }
 timer-text { @include TIMER-FONT(); }
+#timer-page-main article div label { @include SUB-HEADER-FONT(); }
 .timer-button { @include HEADER-FONT(); }

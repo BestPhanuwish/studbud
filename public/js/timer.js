@@ -25,9 +25,11 @@ function getSubjects() {
     return subjects;
 }
 
-function Time(minute, second) {
-    this.minute = minute;
-    this.second = second;
+class Time {
+    constructor(minute, second) {
+        this.minute = minute;
+        this.second = second;
+    }
 }
 
 function getSetting() {
@@ -85,6 +87,7 @@ function LoadTomato() {
     tomatoText.value = tomato;
     tomatoText.innerText = tomato;
 }
+LoadTomato();
 
 /*
 Timer page
@@ -100,6 +103,11 @@ var assignmentSelectIndex = -1; // index -1 mean it does not exist
 var taskSelectSection = "";
 var taskSelectIndex = -1;
 
+// sound
+var buttonSound = document.getElementById("button-sound");
+var alarmSound = document.getElementById("alarm-sound");
+
+// DOM
 var settingButton = document.getElementById("setting-button");
 var settingForm = document.getElementById("timer-setting");
 var settingSubmitButton = settingForm.querySelector("form > #form-submit-button");
@@ -113,6 +121,11 @@ var selectSubmitButton = selectForm.querySelector("form > #form-submit-button");
 var selectExitButton = selectForm.querySelector("form > #form-exit-button");
 var selectBackground = selectForm.getElementsByTagName("div")[0];
 
+var congratForm = document.getElementById("timer-congrat");
+var congratSubmitButton = congratForm.querySelector("form > #form-submit-button");
+var congratExitButton = congratForm.querySelector("form > #form-exit-button");
+var congratBackground = congratForm.getElementsByTagName("div")[0];
+
 var subjectSelectBox = selectForm.getElementsByTagName("select")[0];
 var assignmentSelectBox = selectForm.getElementsByTagName("select")[1];
 var taskSelectBox = selectForm.getElementsByTagName("select")[2];
@@ -120,6 +133,10 @@ var taskSelectBox = selectForm.getElementsByTagName("select")[2];
 var pageBackground = document.getElementById("Timer-page");
 var timerPage = document.getElementById("timer-page-main");
 var selectPage = document.getElementById("timer-page-select");
+
+var navPomodoroButton = document.getElementById("timer-pomodoro-nav");
+var navStopwatchButton = document.getElementById("timer-stopwatch-nav");
+var navSpan = pageBackground.querySelector("nav > span");
 
 var timerText = timerPage.getElementsByTagName("timer-text")[0];
 var playButton = timerPage.getElementsByTagName("button")[0];
@@ -242,9 +259,122 @@ function validateForm(ulForm) {
 /* 
 function startup
 
-Timer page does not have its own function startup instead they have 
-render function vvvv
+Timer page does not have its own function startup instead use this section
+to initialise the Timer function which will run every second after user
+start the timer
 */
+
+
+var counterFunction;
+
+var current_time = new Time(0,0);
+var current_phase = "pomodoro";
+var current_interval = 0;
+
+/* Time Logic Handler
+this function use to handle time logic. Need to be call every second pass.
+When the mode is different, the behaviour of tick also change.
+*/
+function tick() {
+    if (mode == "pomodoro") {
+        if (current_time.minute == 0 && current_time.second == 0) return;
+
+        if (current_time.second > 0) {
+            current_time.second -= 1;
+        } else {
+            current_time.second = 59;
+            current_time.minute -= 1;
+        }
+    } else if (mode == "stopwatch") {
+        if (current_time.second >= 59) {
+            current_time.second = 0;
+            current_time.minute += 1;
+        } else {
+            current_time.second += 1;
+        }
+    }
+}
+
+function PomodoroCount() {
+    let setting = getSetting();
+
+    // when time at zero
+    if (current_time.minute == 0 && current_time.second == 0) {
+
+        // play alarm sound
+        alarmSound.play();
+
+        if (current_phase == "pomodoro") {
+            // update tomato
+            let updateTomato = JSON.stringify(getTomato()+1);
+            localStorage.setItem("tomato", updateTomato);
+            LoadTomato();
+
+            // update task progress
+            let task = getTask();
+            task.progress = parseInt(task.progress) + 1;
+            if (task.progress >= task.goal) {
+                task.isDone = true;
+                updateTask(task);
+
+                // change to select page
+                clearInterval(counterFunction);
+                current_phase = "pomodoro";
+                renderTomodoro();
+                timerPage.style.visibility = "hidden";
+                taskArticle.style.visibility = "hidden";
+                selectPage.style.visibility = "visible";
+
+                // update assignment where we change position of task to done section
+                let subjects = getSubjects();
+                subjects[subjectSelect].assignments[assignmentSelectIndex].task[taskSelectSection].splice(taskSelectIndex,1); // remove that task on the section
+                subjects[subjectSelect].assignments[assignmentSelectIndex].task["done"].push(task);
+                subjects = JSON.stringify(subjects);
+                localStorage.setItem('subjects', subjects);
+
+                // popup congratulation form came up, so the user know the task they are working on is done
+                congratForm.style.visibility = "visible";
+                return;
+            } else {
+                updateTask(task);
+            }
+            renderProgress();
+
+            // updaet interval
+            current_interval += 1;
+
+            // render new background and change current phase var
+            if (current_interval == setting.interval) {
+                current_interval = 0;
+                current_phase = "longbreak";
+                current_time = setting.long;
+                renderLongbreak();
+            } else {
+                current_phase = "shortbreak";
+                current_time = setting.short;
+                renderShortbreak();
+            }
+        } else {
+            current_phase = "pomodoro"
+            current_time = setting.pomodoro;
+            renderTomodoro();
+        }
+
+    } else {
+
+        // the time ticking function
+        tick();
+
+    }
+
+    // render new time to user
+    renderTime();
+}
+
+function StopwatchCount() {
+    tick();
+    renderTime();
+}
 
 
 /* 
@@ -254,11 +384,68 @@ Such as background or text color change, progress bar update, and timer count
 */
 
 
+function changeThemeColor(textClass) {
+    // change navigation button color
+    navPomodoroButton.className = textClass;
+    navStopwatchButton.className = textClass;
+
+    // change span at navigation color
+    if (textClass == "time-text-black") {
+        navSpan.style.backgroundColor = "#272727";
+        articleProgressBar.style.backgroundColor = "#EFF1F3";
+    } else {
+        navSpan.style.backgroundColor = "#EFF1F3";
+        articleProgressBar.style.backgroundColor = "#96e6b3";
+    }
+
+    // change timer and task text color
+    articleSubject.className = textClass;
+    articleTask.className = textClass;
+    timerText.className = textClass;
+}
+
 function renderProgress() {
     let task = getTask();
     articleProgressText.innerText = task.progress + " / " + task.goal;
     articleProgressBar.style.width = Math.min((task.progress/task.goal)*100, 100) + "%";
     articleProgressBar.style.right = 50-(Math.min((task.progress/task.goal)*100, 100)/2) + "%";
+}
+
+function renderTime() {
+    // update timer text
+    let minute = current_time.minute;
+    if (minute < 10)
+        minute = "0" + minute;
+    
+    let second = current_time.second;
+    if (second < 10)
+        second = "0" + second;
+
+    timerText.innerText = minute + ":" + second;
+}
+
+function renderTomodoro() {
+    // change background color
+    pageBackground.className = "time-pomodoro";
+
+    // change text color
+    changeThemeColor("time-text-white");
+}
+
+function renderShortbreak() {
+    // change background color
+    pageBackground.className = "time-shortbreak";
+
+    // change text color
+    changeThemeColor("time-text-black");
+}
+
+function renderLongbreak() {
+    // change background color
+    pageBackground.className = "time-longbreak";
+
+    // change text color
+    changeThemeColor("time-text-black");
 }
 
 
@@ -268,6 +455,119 @@ function event
 These function below is where the user interaction within the page happened
 These function will perform vary depend on the button that pass the function
 */
+
+
+/* Play Button
+When player pressing start button, it will start the counting function
+every second. The behaviour of function changed accorded to the mode.
+It also swap between start and stop mode with playSwitch variable.
+*/
+
+var playSwitch = false; // if true mean, the play button will stop function
+
+playButton.addEventListener("click", function(event) {
+    buttonSound.play();
+
+    if (playSwitch) {
+        playSwitch = false;
+        playButton.innerText = "START";
+
+        clearInterval(counterFunction); // stop the counter loop
+    } else {
+        playSwitch = true;
+        playButton.innerText = "STOP";
+
+        if (mode == "pomodoro") {
+            counterFunction = setInterval(PomodoroCount, 1000) // 1000 mean it will call this function every 1000 milisecond (which is 1 second)
+        } else if (mode == "stopwatch") {
+            counterFunction = setInterval(StopwatchCount, 1000)
+        }
+    }
+})
+
+/* Reset Button
+User can reset their timer back to begining. With stopwatch, it's simple just
+set back to 0. But with Tomodoro, it will have to change page back to select
+page and stop the counting progress.
+*/
+
+resetButton.addEventListener("click", function(event) {
+    buttonSound.play();
+    clearInterval(counterFunction);
+
+    if (mode == "pomodoro") {
+        current_phase = "pomodoro";
+        renderTomodoro();
+        timerPage.style.visibility = "hidden";
+        taskArticle.style.visibility = "hidden";
+        selectPage.style.visibility = "visible";
+    } else if (mode == "stopwatch") {
+        playSwitch = false;
+        playButton.innerText = "START";
+    
+        current_time = new Time(0,0);
+        renderTime();
+    }
+})
+
+/* Navigation Button
+On timer page, there are 2 modes of timer which is Pomodoro and Stopwatch
+By clicking on the nav, it will change the page mode, which will make the
+timer acts differently
+*/
+
+navPomodoroButton.addEventListener("click", function(event) {
+    if (mode == "pomodoro") return; // not doing anything if the user still on the same mode
+
+    // change the mode
+    mode = "pomodoro";
+
+    // Stop time loop
+    clearInterval(counterFunction);
+
+    // change background color
+    pageBackground.className = "time-pomodoro";
+
+    // change text color
+    changeThemeColor("time-text-white");
+
+    // hide the timer page
+    timerPage.style.visibility = "hidden";
+
+    // show the select page
+    selectPage.style.visibility = "visible";
+})
+
+navStopwatchButton.addEventListener("click", function(event) {
+    if (mode == "stopwatch") return; // not doing anything if the user still on the same mode
+
+    // change the mode
+    mode = "stopwatch";
+
+    // Stop time loop and reset the timer count
+    clearInterval(counterFunction);
+    current_time = new Time(0,0);
+    renderTime();
+
+    // reset start button
+    playSwitch = false;
+    playButton.innerText = "START";
+
+    // change background color
+    pageBackground.className = "time-stopwatch";
+
+    // change text color
+    changeThemeColor("time-text-black");
+
+    // hide the task section
+    taskArticle.style.visibility = "hidden";
+
+    // hide the select page
+    selectPage.style.visibility = "hidden";
+
+    // show the timer page
+    timerPage.style.visibility = "visible";
+})
 
 /* Change the pomodoro setting
 Every time user open setting form, it will automatically fill all the input
@@ -342,6 +642,14 @@ settingSubmitButton.addEventListener("click", function(event) {
     if (longbreakSecond == null) longbreakSecond = oldSetting.long.second;
     if (longbreakInterval == null) longbreakInterval = oldSetting.interval;
 
+    // second and minute also can't be decimal
+    pomodoroMinute = Math.floor(pomodoroMinute);
+    pomodoroSecond = Math.floor(pomodoroSecond);
+    shortbreakMinute = Math.floor(shortbreakMinute);
+    shortbreakSecond = Math.floor(shortbreakSecond);
+    longbreakMinute = Math.floor(longbreakMinute);
+    longbreakSecond = Math.floor(longbreakSecond);
+
     // if second is exceed 60 then add it up to minute
     if (pomodoroSecond >= 60) {
         pomodoroMinute = parseInt(pomodoroMinute) + Math.floor(pomodoroSecond/60);
@@ -355,6 +663,11 @@ settingSubmitButton.addEventListener("click", function(event) {
         longbreakMinute += parseInt(longbreakMinute) + Math.floor(longbreakSecond/60);
         longbreakSecond = longbreakSecond%60;
     }
+
+    // interval can't lower than 1 or decimal
+    if (longbreakInterval < 1)
+        longbreakInterval = 1;
+    longbreakInterval = Math.floor(longbreakInterval);
 
     // Make a JS object to contain new setting information
     let newSetting = {
@@ -427,8 +740,10 @@ function clearAndFillSubjectInput() {
     clearAndFillEmptyOption(subjectSelectBox);
 
     // put the option inside select box
+    subjectSelectBox.disabled = true;
     let subjects = getSubjects();
     for (let key in subjects) {
+        subjectSelectBox.disabled = false;
         let subjectName = key;
         let subjectChoice = document.createElement("option");
         subjectChoice.innerText = subjectName;
@@ -445,7 +760,10 @@ function clearAndFillAssignmentInput() {
     if (subjects[subjectSelect] == null) return;
 
     // put the option inside select box
+    assignmentSelectBox.disabled = true;
     for (let i = 0; i < subjects[subjectSelect].assignments.length; i++) {
+        if (subjects[subjectSelect].assignments[i].isDone == true) continue;
+        assignmentSelectBox.disabled = false;
         let assignmentName = subjects[subjectSelect].assignments[i].name;
         let assignmentChoice = document.createElement("option");
         assignmentChoice.innerText = assignmentName;
@@ -463,10 +781,12 @@ function clearAndFillTaskInput() {
     if (assignmentSelectIndex == -1) return;
 
     // put the option inside select box (except task in done section)
+    taskSelectBox.disabled = true;
     for (let [section, taskArray] of Object.entries(subjects[subjectSelect].assignments[assignmentSelectIndex].task)) {
         if (section == "done") continue;
 
         for (let i = 0; i < taskArray.length; i++) {
+            taskSelectBox.disabled = false;
             let taskName = taskArray[i].name;
             let taskChoice = document.createElement("option");
             taskChoice.innerText = taskName;
@@ -582,6 +902,9 @@ selectSubmitButton.addEventListener("click", function(event) {
     // hide the select page
     selectPage.style.visibility = "hidden";
 
+    // show the task section
+    taskArticle.style.visibility = "visible";
+
     // show the timer page
     timerPage.style.visibility = "visible";
 
@@ -593,4 +916,36 @@ selectSubmitButton.addEventListener("click", function(event) {
 
     // update progress bar
     renderProgress();
+
+    // change button, so its state is start
+    playSwitch = true;
+    playButton.innerText = "STOP";
+
+    // reset timer variable and run the timer loop every 1 second
+    let setting = getSetting();
+    current_time = setting.pomodoro;
+    console.log(current_time);
+    current_phase = "pomodoro";
+    current_interval = 0;
+    renderTime();
+    counterFunction = setInterval(PomodoroCount, 1000);
+})
+
+/* Congratulation task form
+This form will shown up when user done their task (when the progress bar
+is full when use pomodoro timer)
+*/
+
+// close form event
+congratBackground.addEventListener("click", function(event) {
+    congratForm.style.visibility = "hidden";
+});
+
+congratExitButton.addEventListener("click", function(event) {
+    congratForm.style.visibility = "hidden";
+});
+
+// sunmit form event
+congratSubmitButton.addEventListener("click", function(event) {
+    congratForm.style.visibility = "hidden";
 })

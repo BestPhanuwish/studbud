@@ -1,0 +1,228 @@
+/* Declare variable */
+
+// Color-pallette
+$YELLOW-COLOR: #f2e94e;
+$DARKYELLOW-COLOR: #fed766;
+$RED-COLOR: #da3e52;
+$GREEN-COLOR: #96e6b3;
+$BLUE-COLOR: #a3d9ff;
+$BLACK-COLOR: #272727;
+$GREY-COLOR: #696773;
+$WHITE-COLOR: #EFF1F3;
+
+// Font style
+@mixin FONT-TEMPLATE($style, $weight, $size) { // act as a template for every font
+    font-style: $style;
+    font-weight: $weight;
+    font-size: $size;
+}
+
+@mixin HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 800, 24px);
+}
+
+@mixin SUB-HEADER-FONT {
+    @include FONT-TEMPLATE(normal, 700, 18px);
+}
+
+@mixin SPECIAL-FONT {
+    @include FONT-TEMPLATE(italic, 200, 18px);
+}
+
+@mixin PARAGRAPH-FONT {
+    @include FONT-TEMPLATE(normal, 400, 12px);
+}
+
+// Layout variable
+@mixin SCROLLING_LAYOUT {
+    display: block; 
+    overflow-y: auto; 
+    word-wrap: break-word;
+}
+
+@mixin CONTENT_OVERFLOW {
+    margin: 0.25em 0;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+@mixin BUTTON_IMAGE_STYLE($display, $buttonSize, $minSize) {
+    // hide button only image shown
+    border: 0;
+    background: transparent;
+
+    // set the button so it fit with top bar size
+    display: $display;
+    justify-content: center;
+    align-items: center;
+    width: $buttonSize;
+    height: $buttonSize; 
+
+    // This will make image scale accoreded to user screen size as well, so it not looked glitched on the button
+    img { min-width: $minSize; min-height: $minSize; }
+}
+
+/* Content page layout */
+#Content-List {
+    // split aside nav and main content with grid layout
+    display: grid; 
+    grid-template-columns: 18em 1fr; 
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+        "aside content"; 
+
+    aside { 
+        @include SCROLLING_LAYOUT();
+        grid-area: aside; 
+        padding: 20px;
+        h3 { display: inline; }
+        button { display: inline; }
+    }
+
+    main-content { 
+        grid-area: content; 
+        padding: 20px;
+        display: block;
+    }
+}
+
+/* Content page styling */
+#Content-List {
+
+    aside { 
+        background-color: $YELLOW-COLOR;
+
+        // hide the list dot point on aside navigation
+        ul { list-style: none; }
+        ul li a { cursor: pointer; &:hover{ color: $BLUE-COLOR; } }
+    }
+
+    main-content { 
+        background-color: $WHITE-COLOR;
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
+/* Content page typography (just make the aside nav have special font) */
+#Content-List aside ul li a { @include SPECIAL-FONT(); text-decoration: none; color: $BLACK-COLOR; }
+
+
+/* Section layout */
+section-topbar {
+    grid-area: topbar;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    h1 { display: inline; }
+}
+
+// create span space boundary between topbar and content
+section-topbar + span {
+    display: block;
+    width: 100%;
+    height: 0.2rem;
+    background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5);
+}
+
+section-content {
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 4em; // give each section a little bit of space
+}
+
+/* Section styling */
+section-topbar button {
+    @include BUTTON_IMAGE_STYLE(inline, 2.5em, 2em);
+}
+
+
+/* Content note layout */
+section-content > article {
+    width: 18em;
+    min-width: 18em;
+    height: auto;
+    margin: 2vh 2vh;
+    padding: 1em;
+    text-align: left;
+
+    display: grid; 
+    grid-template-columns: 1fr auto; 
+    grid-template-rows: auto auto auto auto auto; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "header button"
+      "assignment assignment"
+      "description description"
+      "span span"
+      "link link"; 
+
+    // layout the child of task note
+    h2 { grid-area: header; @include CONTENT_OVERFLOW(); }
+    h2 + div { grid-area: button; @include CONTENT_OVERFLOW(); display: flex; justify-content: flex-end; }
+    p:first-of-type { grid-area: assignment; @include CONTENT_OVERFLOW(); }
+    p:last-of-type { grid-area: description; @include CONTENT_OVERFLOW(); }
+    span { grid-area: span; height: 0.2em; width: 100%; @include CONTENT_OVERFLOW(); }
+    ul { 
+        grid-area: link; 
+        @include CONTENT_OVERFLOW(); 
+
+        display: block;
+        list-style: none;
+        padding-left: 0;
+
+        li { display: flex;}
+        li img { display: inline; margin-right: 0.5em; }
+        li a { display: inline; }
+    }
+
+    div > button {
+        @include BUTTON_IMAGE_STYLE(inline, 1.5rem, 1rem);
+    }
+
+    // set the link image so it's not too big
+    ul li img { max-width: 1.5rem; max-height: 1.5rem; }
+}
+
+// Hide Content Template
+.content-template { display: none; }
+
+
+/* Content note styling */
+section-content > article {
+    background-color: white;
+    border-radius: 20px;
+
+    // create frame for assignment name tag
+    p:first-of-type { 
+        color: $WHITE-COLOR; 
+        background-color: $GREY-COLOR; 
+        border-radius: 25px;
+        // make a custom layout seperate from layout section, for aesthetic purpose
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: auto;
+        padding: 0 0.5em;
+    }
+
+    // hide button only image shown
+    div > button {
+        border: 0;
+        background: transparent;
+    }
+
+    // hide the span space between info and link
+    span { background-color: rgba($color: $BLACK-COLOR, $alpha: 0.5); }
+
+    // make the link looks clickable
+    ul li a { 
+        color: $BLUE-COLOR;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover { color: $BLACK-COLOR; }
+        &:active { text-decoration: underline; }
+    }
+}
