@@ -140,6 +140,15 @@ $WHITE-COLOR: #EFF1F3;
         width: 100%;
         overflow: hidden;
 
+        // make author name looks clickable
+        h3 > a {  
+            text-decoration: none;
+            color: $BLUE-COLOR;
+
+            &:hover { color: $BLACK-COLOR; }
+            &:active { text-decoration: underline; }
+        }
+
         > img { border: 0.2em solid $GREY-COLOR; }
         button {  
             // hide button only image shown
@@ -164,9 +173,6 @@ $WHITE-COLOR: #EFF1F3;
     }
 }
 
-// hide pause button
-#music-pause { display: none; }
-
 /* Music page typography */
 #Music-Page form input { @include SPECIAL-FONT(); }
 #Music-Page form small { @include SMALL-FONT(); }
@@ -189,7 +195,7 @@ $WHITE-COLOR: #EFF1F3;
         display: grid;
         grid-template-columns: auto; 
         grid-template-rows: auto auto; 
-        img, img.music-cover-image { grid-area: 1 / 1 / 2 / 2; }
+        img, img.music-cover-image { grid-area: 1 / 1 / 2 / 2; height: 8em; width: 100%; }
         figcaption { grid-area: 2 / 1 / 3 / 2; }
     }
 
@@ -198,6 +204,9 @@ $WHITE-COLOR: #EFF1F3;
         z-index: 2;
     }
 }
+
+// hide the list template
+#songList-template { display: none; } // change to flex when show
 
 /* Song List styling */
 #music-selector {

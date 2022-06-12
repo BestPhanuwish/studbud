@@ -72,19 +72,15 @@
 
     <!-- All the section under main-content are add dynamically, because it's used data from task page to load its conetnt. If not data not exist, there will not be any content on this page -->
     <main-content>
-      <h1>Song name</h1>
-      <h3>Author</h3>
+      <h1>Loading YouTube Data (Song Name)</h1>
+      <h3>By <a href="" target="_blank" rel="noopener noreferrer">-</a></h3>
       <img src="Image/tbExample.jpeg" alt="YouTube Thumbnail Image">
       <div>
         <button>
           <img src="Image/skipLeft.png" alt="Skip to left button">
         </button>
-        <button id="music-pause">
-          <img src="Image/pause.png" alt="Pause music button">
-        </button>
-        <button id="music-play">
-          <img src="Image/play.png" alt="Play music button">
-        </button>
+        <!-- By doing this, user able to play/pause and skip to any part of the song (creditted to https://www.drupal.org/forum/general/general-discussion/2010-12-20/embedding-youtube-videos-as-audio-only-clips) -->
+        <object id="music-player" width="361" height="50"><param name="movie" value="https://www.youtube.com/embed/iik25wqIuFo"></param><param name="allowFullScreen" value="false"></param><param name="allowscriptaccess" value="always"></param><embed src="https://www.youtube.com/embed/iik25wqIuFo" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="false" width="480" height="385"></embed></object>
         <button>
           <img src="Image/skipRight.png" alt="Skip to right button">
         </button>
@@ -95,72 +91,25 @@
     <aside>
       <h2>Music List</h2>
       <ul id="music-selector">
-        <li>
-          <figure>
-            <img src="Image/tbExample.jpeg" alt="">
-            <img class="music-cover-image" src="Image/tbOverlay.png" alt="Cover current played music">
-            <figcaption>Song Name</figcaption>
-          </figure>
-          <button id="drag-button">
-            <img src="Image/drag.png" alt="Drag music button">
-          </button>
-          <button id="delete-button">
-            <img src="Image/delete.png" alt="Delete music button">
-          </button>
-        </li>
-        <li>
-          <figure>
-            <img src="Image/tbExample.jpeg" alt="">
-            <img class="music-cover-image" src="Image/tbOverlay.png" alt="Cover current played music">
-            <figcaption>Song Name</figcaption>
-          </figure>
-          <button id="drag-button">
-            <img src="Image/drag.png" alt="Drag music button">
-          </button>
-          <button id="delete-button">
-            <img src="Image/delete.png" alt="Delete music button">
-          </button>
-        </li>
       </ul>
     </aside>
 
   </main>
 
-  <!-- This section is acts as a template and will get clone dynamically. So, this content have to be invisible to the user -->
-  <section id="" class="content-template">
-    <section-topbar>
-      <h1></h1>
-      <button>
-        <img src="Image/plus.png" alt="Add new content button">
-      </button>
-    </section-topbar> 
-    <span></span>
-    <section-content>
-
-    </section-content>
-  </section>
-
-  <!-- This article is acts as a template and will get clone as a content note. So, this content have to be invisible to the user -->
-  <article class="content-template">
-    <h2></h2>
-    <div>
-      <button id="edit-button">
-        <img src="Image/edit.png" alt="Edit task button">
-      </button>
-      <button id="delete-button">
-        <img src="Image/delete.png" alt="Delete task button">
-      </button>
-    </div>
-    <p></p>
-    <p></p>
-    <span></span>
-    <ul>
-      <li>
-        <img src="Image/link.png" alt="Link icon">
-        <a href="" target="_blank" rel="noopener noreferrer"></a>
-      </li>
-    </ul>
-  </article>
+  <!-- This List is acts as a template and will get clone dynamically. So, this content have to be invisible to the user -->
+  <li id="songList-template">
+    <figure>
+      <img src="Image/tbExample.jpeg" alt="">
+      <img class="music-cover-image" src="Image/tbOverlay.png" alt="Cover current played music">
+      <figcaption>Song Name</figcaption>
+    </figure>
+    <button id="drag-button">
+      <img src="Image/drag.png" alt="Drag music button">
+    </button>
+    <button id="delete-button">
+      <img src="Image/delete.png" alt="Delete music button">
+    </button>
+  </li>
 
 </body>
 

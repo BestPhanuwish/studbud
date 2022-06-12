@@ -22,7 +22,7 @@ body {
 
 main-content { background-color: $WHITE-COLOR; }
 
-audio { display: none; } // hide the audio tags
+audio, iframe { display: none; } // hide the audio tags
 
 /* Header (TOPBAR) layout */
 header {
