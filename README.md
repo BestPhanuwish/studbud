@@ -121,5 +121,41 @@ The  ```<popup-form>``` had been used consistantly. The way it protray on the we
 ![figure 17: Custom form validation image](document/fig17.png)
 Most of the website not rely on default form validation because of its inconsistancy in design. So, I also decided to used custom form validation. That came with lot of benefits such as, the design is suits to overall looks of the website, it specify in detail on which input the user had missed, and ability to custom the warning text to tell the user what they've done wrong. 
 
+# Testing and Changing
+
+![figure 18: Old timer break progress bar](document/fig18.png)
+![figure 19: New timer break progress bar](document/fig19.png)
+The progress bar color had been change because in the break time, the red progress bar is not suitable for the break time feeling. So, I've changed it to white color progress bar
+
+The progress bar also only count for each Pomodoro that will used instead of keep track of the time to prevent edge case and confusion.
+
+![figure 20: Old Music Player](document/fig20.png)
+![figure 21: New Music Player](document/fig21.png)
+As you can see, with the new YouTube embed button, it gave user more functionallity to the song that they are currently listened to. The url input now also have a place holder so user knew what kind of format will need to use to be able to embed the YouTube link in.
+
+# Challenge
+Most of the time, when we are designing a website. Not all the design that we have plan in our head will work out perfectly fine as we planed. We might encounter some challenge throughout our journey, and it's time for us to use some problem solving skill.
+
+## YouTube audio problem
+![figure 22: YouTube object embed player](document/fig22.png)
+There have been a difficulty of me trying to figuring out how to used YouTube api and it tooks me a few days and I still can't get around with it on how I able to play only the audio sound from YouTube, that can cooporate with my song list script. So, I've decided to delete old functionallity of Music page and changed it to used YouTube object embed that looked like a custom audio player. Which turns out quite ok for me, because of the design not quite match with the website. But with the time limitation, this is what I can only do for now.
+
+# Further planning
+There are several aspect of the STUDBUD web application that I wish I can improve in the further development.
+ * User able to use the drag button features and able to use this website on mobile
+ * User able to add new subject and assignment on timer and content page in case if they go to those page at first and getting confused
+ * The timer able to still counting even going to different page
+ * The music player that able to loop and go to next song automatically
+ * The music player that can listen to the song even go to different page
+
 # References
 1. DECO2017_DesignBrief. (2022). Retrieved from https://canvas.sydney.edu.au/courses/39757/files/22265699
+1. Rick Astley. (2009). Rick Astley - Never Gonna Give You Up (Official Music Video). 
+Retrieved from https://www.youtube.com/watch?v=dQw4w9WgXcQ
+1. さつき が てんこもり. (2021). WE ARE JAPANESE GOBLIN [MMD].
+Retrieved from https://www.youtube.com/watch?v=UIp6_0kct_U
+1. Logan Mader. (2013). Metal Gear Rising: Revengeance - The Only Thing I Know For Real (Samuel Boss Battle) Extended.
+Retrieved from https://www.youtube.com/watch?v=FhHeGZoWl0g
+1. Peter Gasston. (2014). A Detailed Introduction To Custom Elements. Retrieved from https://www.smashingmagazine.com/2014/03/introduction-to-custom-elements/
+1. Worrisome Whale. (2020). javascript validate url to match youtube video. Retrieved from https://www.codegrepper.com/code-examples/javascript/javascript+validate+url+to+match+youtube+video
+1. remoteless. (2010). Embedding Youtube Videos as "Audio only" clips. Retrieved from https://www.drupal.org/forum/general/general-discussion/2010-12-20/embedding-youtube-videos-as-audio-only-clips
